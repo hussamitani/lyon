@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
-            $table->foreign('type_id')->references('id')->on('appointments_types');
+            $table->foreignId('patient_id')->constrained()->references('id')->on('patients')->onDelete('cascade');
+            $table->foreignId('type_id')->constrained()->references('id')->on('appointments_types');
             $table->dateTime('begins_at');
             $table->dateTime('ends_at');
             $table->string('subject');

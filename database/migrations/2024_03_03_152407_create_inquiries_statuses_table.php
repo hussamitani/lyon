@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inquiry_statuses', function (Blueprint $table) {
+        Schema::create('inquiries_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('key')->nullable();
             $table->string('status');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inquiry_statuses');
+        Schema::dropIfExists('inquiries_statuses');
     }
 };

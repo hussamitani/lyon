@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inquiry_responses', function (Blueprint $table) {
+        Schema::create('inquiries_responses', function (Blueprint $table) {
             $table->id();
-            $table->foreign('inquiry_id')->references('id')->on('inquiries');
-            $table->foreign('status_id')->references('id')->on('inquiries_statuses');
+            $table->foreignId('inquiries_id')->constrained()->references('id')->on('inquiries');
+            $table->foreignId('status_id')->constrained()->references('id')->on('inquiries_statuses');
             $table->string('message');
             $table->timestamps();
             $table->softDeletes();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inquiry_responses');
+        Schema::dropIfExists('inquiries_responses');
     }
 };
