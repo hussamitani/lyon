@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -116,6 +117,20 @@ class Permission extends Model
     public const ADMIN_VIEW_PERMISSIONS = 'admin_view_permissions';
 
     protected $guarded = [];
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => trans("permissions.{$attributes['key']}.name")
+        );
+    }
+
+    public function description(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => trans("permissions.{$attributes['key']}.description")
+        );
+    }
 
     /**
      * @return BelongsToMany<Role>
