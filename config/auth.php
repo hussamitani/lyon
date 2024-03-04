@@ -42,8 +42,8 @@ return [
         ],
         'patient' => [
             'driver' => 'session',
-            'provider' => 'patients'
-        ]
+            'provider' => 'patients',
+        ],
     ],
 
     /*
@@ -72,7 +72,7 @@ return [
         'patients' => [
             'driver' => 'eloquent',
             'model' => App\Models\Patient::class,
-        ]
+        ],
 
         // 'users' => [
         //     'driver' => 'database',

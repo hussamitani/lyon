@@ -2,25 +2,30 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $qid
  * @property mixed $password
- * @property \Illuminate\Support\Carbon $birthday
+ * @property Carbon $birthday
  * @property string $gender
  * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ *
  * @method static \Database\Factories\PatientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newQuery()
@@ -35,18 +40,30 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereQid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereUpdatedAt($value)
+ *
+ * @property-read Collection<int, Appointment> $appointments
+ * @property-read int|null $appointments_count
+ * @property-read Collection<int, Inquiry> $inquiries
+ * @property-read int|null $inquiries_count
+ * @property-read Collection<int, Report> $reports
+ * @property-read int|null $reports_count
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Patient extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
         'qid',
         'password',
         'birthday',
-        'gender'
+        'gender',
     ];
 
     protected $hidden = [
@@ -54,11 +71,38 @@ class Patient extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * @return string[]
+     */
     protected function casts(): array
     {
         return [
             'birthday' => 'date',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * @return HasMany<Inquiry>
+     */
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(Inquiry::class);
+    }
+
+    /**
+     * @return HasMany<Appointment>
+     */
+    public function appointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    /**
+     * @return HasMany<Report>
+     */
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class);
     }
 }

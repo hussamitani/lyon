@@ -16,7 +16,18 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained()->references('id')->on('patients')->onDelete('cascade');
             $table->string('subject');
             $table->string('description');
+
+            $table->unsignedBigInteger('created_by_id')->nullable();
+            $table->foreign('created_by_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('updated_by_id')->nullable();
+            $table->foreign('updated_by_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('deleted_by_id')->nullable();
+            $table->foreign('deleted_by_id')->references('id')->on('users');
+
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

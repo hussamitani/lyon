@@ -12,7 +12,7 @@ class InquiryResponsePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -20,7 +20,7 @@ class InquiryResponsePolicy
      */
     public function view(User $user, InquiryResponse $inquiryResponse): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class InquiryResponsePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class InquiryResponsePolicy
      */
     public function update(User $user, InquiryResponse $inquiryResponse): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ class InquiryResponsePolicy
      */
     public function delete(User $user, InquiryResponse $inquiryResponse): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -52,7 +52,7 @@ class InquiryResponsePolicy
      */
     public function restore(User $user, InquiryResponse $inquiryResponse): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -60,6 +60,6 @@ class InquiryResponsePolicy
      */
     public function forceDelete(User $user, InquiryResponse $inquiryResponse): bool
     {
-        //
+        return true;
     }
 }

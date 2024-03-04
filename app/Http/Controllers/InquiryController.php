@@ -5,62 +5,45 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInquiryRequest;
 use App\Http\Requests\UpdateInquiryRequest;
 use App\Models\Inquiry;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class InquiryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreInquiryRequest $request)
+    public function store(StoreInquiryRequest $request): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Inquiry $inquiry)
+    public function show(Inquiry $inquiry): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Inquiry $inquiry)
+    public function edit(Inquiry $inquiry): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateInquiryRequest $request, Inquiry $inquiry)
+    public function update(UpdateInquiryRequest $request, inquiry $inquiry): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Inquiry $inquiry)
+    public function destroy(Inquiry $inquiry): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 }
