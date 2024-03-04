@@ -12,7 +12,7 @@ class InquiryPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -20,7 +20,7 @@ class InquiryPolicy
      */
     public function view(User $user, Inquiry $inquiry): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class InquiryPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class InquiryPolicy
      */
     public function update(User $user, Inquiry $inquiry): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ class InquiryPolicy
      */
     public function delete(User $user, Inquiry $inquiry): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -52,7 +52,7 @@ class InquiryPolicy
      */
     public function restore(User $user, Inquiry $inquiry): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -60,6 +60,6 @@ class InquiryPolicy
      */
     public function forceDelete(User $user, Inquiry $inquiry): bool
     {
-        //
+        return true;
     }
 }

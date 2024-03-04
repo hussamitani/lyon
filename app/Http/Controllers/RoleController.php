@@ -5,62 +5,45 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRoleRequest $request)
+    public function store(StoreRoleRequest $request): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Role $role)
+    public function show(Role $role): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
+    public function edit(Role $role): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Role $role)
+    public function destroy(Role $role): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 }

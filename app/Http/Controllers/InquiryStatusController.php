@@ -5,62 +5,45 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInquiryStatusRequest;
 use App\Http\Requests\UpdateInquiryStatusRequest;
 use App\Models\InquiryStatus;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class InquiryStatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreInquiryStatusRequest $request)
+    public function store(StoreInquiryStatusRequest $request): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(InquiryStatus $inquiryStatus)
+    public function show(InquiryStatus $inquiryStatus): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(InquiryStatus $inquiryStatus)
+    public function edit(InquiryStatus $inquiryStatus): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateInquiryStatusRequest $request, InquiryStatus $inquiryStatus)
+    public function update(UpdateInquiryStatusRequest $request, InquiryStatus $inquiryStatus): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(InquiryStatus $inquiryStatus)
+    public function destroy(InquiryStatus $inquiryStatus): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 }

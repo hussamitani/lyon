@@ -12,7 +12,7 @@ class AppointmentTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -20,7 +20,7 @@ class AppointmentTypePolicy
      */
     public function view(User $user, AppointmentType $appointmentType): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class AppointmentTypePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class AppointmentTypePolicy
      */
     public function update(User $user, AppointmentType $appointmentType): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -44,7 +44,7 @@ class AppointmentTypePolicy
      */
     public function delete(User $user, AppointmentType $appointmentType): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -52,7 +52,7 @@ class AppointmentTypePolicy
      */
     public function restore(User $user, AppointmentType $appointmentType): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -60,6 +60,6 @@ class AppointmentTypePolicy
      */
     public function forceDelete(User $user, AppointmentType $appointmentType): bool
     {
-        //
+        return true;
     }
 }

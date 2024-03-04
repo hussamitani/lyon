@@ -5,62 +5,45 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use App\Models\Appointment;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class AppointmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAppointmentRequest $request)
+    public function store(StoreAppointmentRequest $request): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Appointment $appointment)
+    public function show(Appointment $appointment): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Appointment $appointment)
+    public function edit(Appointment $appointment): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('welcome');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAppointmentRequest $request, Appointment $appointment)
+    public function update(UpdateAppointmentRequest $request, Appointment $appointment): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Appointment $appointment)
+    public function destroy(Appointment $appointment): RedirectResponse
     {
-        //
+        return redirect()->route('welcome');
     }
 }
