@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Filament\Pdms\Resources;
+
+use App\Models\Report;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+
+class ReportResource extends Resource
+{
+    protected static ?string $model = Report::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-plus';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\Select::make('patient_id')
+                    ->relationship('patient', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('subject')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('description')
+                    ->required()
+                    ->maxLength(255),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('patient.name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('subject')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => \App\Filament\Pdms\Resources\ReportResource\Pages\ListReports::route('/'),
+            'create' => \App\Filament\Pdms\Resources\ReportResource\Pages\CreateReport::route('/create'),
+            'edit' => \App\Filament\Pdms\Resources\ReportResource\Pages\EditReport::route('/{record}/edit'),
+        ];
+    }
+}
