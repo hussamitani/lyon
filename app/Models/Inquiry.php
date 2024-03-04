@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Concerns\HasAuthor;
+use App\Observers\InquiryObserver;
 use Eloquent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,11 +45,30 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry withoutTrashed()
  *
+ * @property int|null $created_by_id
+ * @property int|null $updated_by_id
+ * @property int|null $deleted_by_id
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereCreatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereDeletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereUpdatedById($value)
+ *
+ * @property-read \App\Models\User|null $createdBy
+ * @property-read \App\Models\User|null $deletedBy
+ * @property-read \App\Models\User|null $updatedBy
+ *
  * @mixin Eloquent
  */
 class Inquiry extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasAuthor, HasFactory, SoftDeletes;
+
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        self::observe(InquiryObserver::class);
+    }
 
     /**
      * @return HasMany<InquiryResponse>
@@ -62,7 +83,7 @@ class Inquiry extends Model
      */
     public function type(): BelongsTo
     {
-        return $this->belongsTo(InquiryType::class);
+        return $this->belongsTo(InquiryType::class, 'type_id', 'id');
     }
 
     /**

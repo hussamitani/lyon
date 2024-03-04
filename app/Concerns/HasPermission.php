@@ -9,7 +9,8 @@ trait HasPermission
         return $this->roles
             ->pluck('permissions')
             ->flatten()
-            ->pluck('id')
-            ->contains($permission);
+            ->pluck('key')
+            ->contains($permission) ||
+        $this->permissions->pluck('key')->contains($permission);
     }
 }

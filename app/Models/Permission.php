@@ -35,6 +35,22 @@ class Permission extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    public const ALL = [
+        self::VIEW_APPOINTMENT,
+        self::MANAGE_APPOINTMENT,
+        self::VIEW_INQUIRY,
+        self::MANAGE_INQUIRY,
+        self::UPDATE_INQUIRY_STATUS,
+        self::VIEW_REPORT,
+        self::MANAGE_REPORT,
+        self::MANAGE_APPOINTMENT_TYPE,
+        self::MANAGE_INQUIRY_TYPE,
+        self::MANAGE_INQUIRY_STATUS_TYPE,
+        self::CREATE_PATIENT,
+    ];
+
     public const VIEW_APPOINTMENT = 'view_appointment';
 
     public const MANAGE_APPOINTMENT = 'manage_appointment';
@@ -54,6 +70,8 @@ class Permission extends Model
     public const MANAGE_INQUIRY_TYPE = 'manage_inquiry_type';
 
     public const MANAGE_INQUIRY_STATUS_TYPE = 'manage_inquiry_status_type';
+
+    public const CREATE_PATIENT = 'create_patient';
 
     protected $guarded = [];
 
