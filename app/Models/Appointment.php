@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Concerns\HasAuthor;
+use App\Observers\AppointmentObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -49,11 +51,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment withoutTrashed()
  *
+ * @property-read \App\Models\User|null $createdBy
+ * @property-read \App\Models\User|null $deletedBy
+ * @property-read \App\Models\User|null $updatedBy
+ *
  * @mixin \Eloquent
  */
 class Appointment extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasAuthor, HasFactory, SoftDeletes;
+
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        self::observe(AppointmentObserver::class);
+    }
 
     /**
      * @return string[]

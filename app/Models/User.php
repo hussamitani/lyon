@@ -40,6 +40,9 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  *
+ * @property-read Collection<int, \App\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable
@@ -76,6 +79,17 @@ class User extends Authenticatable
         return $this->belongsToMany(
             Role::class,
             'roles_users',
+        );
+    }
+
+    /**
+     * @return BelongsToMany<Permission>
+     */
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Permission::class,
+            'users_permissions',
         );
     }
 }

@@ -21,11 +21,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryType withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryType withoutTrashed()
  *
+ * @property int $id
+ * @property string|null $key
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryType whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class InquiryType extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = 'inquiries_types';
 
     /**
      * @return HasMany<Inquiry>

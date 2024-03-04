@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Concerns\HasAuthor;
+use App\Observers\ReportObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,11 +35,32 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Report withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Report withoutTrashed()
  *
+ * @property int|null $created_by_id
+ * @property int|null $updated_by_id
+ * @property int|null $deleted_by_id
+ * @property Carbon|null $deleted_at
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereCreatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereDeletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereUpdatedById($value)
+ *
+ * @property-read \App\Models\User|null $createdBy
+ * @property-read \App\Models\User|null $deletedBy
+ * @property-read \App\Models\User|null $updatedBy
+ *
  * @mixin \Eloquent
  */
 class Report extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasAuthor, HasFactory, SoftDeletes;
+
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        self::observe(ReportObserver::class);
+    }
 
     /**
      * @return BelongsTo<Patient, Report>
