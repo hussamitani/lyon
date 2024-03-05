@@ -48,6 +48,13 @@ class Role extends Model
     protected $guarded = [];
 
     /**
+     * @var string[]
+     */
+    protected $withCount = [
+        'permissions',
+    ];
+
+    /**
      * @return BelongsToMany<User>
      */
     public function users(): BelongsToMany

@@ -27,6 +27,7 @@ class RoleResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
                 Forms\Components\Select::make('permissions')
+                    ->columnSpan(2)
                     ->multiple()
                     ->preload()
                     ->relationship('permissions', 'key')
@@ -42,18 +43,8 @@ class RoleResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('permissions_count')
+                    ->alignEnd(),
             ])
             ->filters([
                 //

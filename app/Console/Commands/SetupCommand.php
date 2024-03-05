@@ -6,6 +6,7 @@ use App\Jobs\Setup\CreateAppointmentTypesJob;
 use App\Jobs\Setup\CreateInquiryStatusesJob;
 use App\Jobs\Setup\CreateInquiryTypesJob;
 use App\Jobs\Setup\CreatePermissionsJob;
+use App\Jobs\Setup\CreateRolesJob;
 use Illuminate\Console\Command;
 
 class SetupCommand extends Command
@@ -40,5 +41,8 @@ class SetupCommand extends Command
 
         dispatch_sync(new CreateInquiryTypesJob());
         $this->info('Created Inquiry Types');
+
+        dispatch_sync(new CreateRolesJob());
+        $this->info('Created default Roles');
     }
 }
