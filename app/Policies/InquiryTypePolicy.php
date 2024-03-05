@@ -44,6 +44,10 @@ class InquiryTypePolicy
      */
     public function delete(User $user, InquiryType $inquiryType): bool
     {
+        if ($inquiryType->key) {
+            return false;
+        }
+
         return true;
     }
 

@@ -21,22 +21,30 @@ class AppointmentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('patient_id')
+                    ->columnSpan(2)
                     ->relationship('patient', 'name')
+                    ->searchable(['firstname', 'lastname', 'qid'])
+                    ->placeholder('Select a patient')
+                    ->searchPrompt('Name or QID')
                     ->required(),
+                Forms\Components\TextInput::make('subject')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\Select::make('type_id')
                     ->relationship('type', 'name')
+                    ->label('Appointment Type')
                     ->required(),
                 Forms\Components\DateTimePicker::make('begins_at')
                     ->required(),
                 Forms\Components\DateTimePicker::make('ends_at')
                     ->required(),
-                Forms\Components\TextInput::make('subject')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('location')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpan(2),
+                Forms\Components\RichEditor::make('description')
+                    ->label('Content')
+                    ->columnSpan(2)
                     ->required()
                     ->maxLength(255),
             ]);

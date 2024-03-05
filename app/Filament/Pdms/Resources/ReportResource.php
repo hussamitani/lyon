@@ -2,6 +2,11 @@
 
 namespace App\Filament\Pdms\Resources;
 
+use App\Filament\Pdms\Resources\ReportResource\Pages\CreateReport;
+use App\Filament\Pdms\Resources\ReportResource\Pages\EditReport;
+use App\Filament\Pdms\Resources\ReportResource\Pages\ListReports;
+use App\Filament\Pdms\Resources\ReportResource\Pages\ViewReport;
+use App\Models\Patient;
 use App\Models\Report;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -21,14 +26,23 @@ class ReportResource extends Resource
             ->schema([
                 Forms\Components\Select::make('patient_id')
                     ->relationship('patient', 'name')
+                    ->searchable(['firstname', 'lastname', 'qid'])
+                    ->placeholder('Select a patient')
+                    ->searchPrompt('Name or QID')
+                    ->getOptionLabelFromRecordUsing(fn (Patient $record) => "$record->qid | {$record->name}")
                     ->required(),
                 Forms\Components\TextInput::make('subject')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\RichEditor::make('description')
                     ->required()
                     ->maxLength(255),
-            ]);
+                Forms\Components\FileUpload::make('files')
+                    ->multiple()
+                    ->preserveFilenames()
+                    ->directory(fn (Forms\Get $get) => Patient::find($get('patient_id'))->qid)
+                    ->downloadable(),
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -40,16 +54,6 @@ class ReportResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -74,9 +78,10 @@ class ReportResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Pdms\Resources\ReportResource\Pages\ListReports::route('/'),
-            'create' => \App\Filament\Pdms\Resources\ReportResource\Pages\CreateReport::route('/create'),
-            'edit' => \App\Filament\Pdms\Resources\ReportResource\Pages\EditReport::route('/{record}/edit'),
+            'index' => ListReports::route('/'),
+            'create' => CreateReport::route('/create'),
+            'view' => ViewReport::route('/{record}'),
+            'edit' => EditReport::route('/{record}/edit'),
         ];
     }
 }

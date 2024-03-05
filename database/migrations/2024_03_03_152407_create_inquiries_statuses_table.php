@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('key')->nullable();
             $table->string('status');
+            $table->string('description')->nullable();
+            $table->string('status_category');
             $table->timestamps();
             $table->softDeletes();
         });

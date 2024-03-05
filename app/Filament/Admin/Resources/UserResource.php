@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\UserResource\Pages;
+use App\Models\Permission;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -34,7 +35,8 @@ class UserResource extends Resource
                 Forms\Components\Select::make('permissions')
                     ->multiple()
                     ->preload()
-                    ->relationship('permissions', 'key'),
+                    ->relationship('permissions', 'key')
+                    ->getOptionLabelFromRecordUsing(fn (Permission $record) => "{$record->name}"),
             ]);
     }
 
@@ -46,9 +48,6 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

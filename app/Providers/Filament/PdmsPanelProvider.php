@@ -5,10 +5,10 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -26,6 +26,9 @@ class PdmsPanelProvider extends PanelProvider
             ->default()
             ->id('pdms')
             ->path('pdms')
+            ->brandName('PDMS / App')
+            ->sidebarCollapsibleOnDesktop()
+            ->maxContentWidth(MaxWidth::Full)
             ->login()
             ->colors([
                 'primary' => Color::Amber,
@@ -33,7 +36,6 @@ class PdmsPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Pdms/Resources'), for: 'App\\Filament\\Pdms\\Resources')
             ->discoverPages(in: app_path('Filament/Pdms/Pages'), for: 'App\\Filament\\Pdms\\Pages')
             ->pages([
-                Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Pdms/Widgets'), for: 'App\\Filament\\Pdms\\Widgets')
             ->widgets([
@@ -51,6 +53,7 @@ class PdmsPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->userMenuItems(FilamentPanelHelper::userMenuItems())
             ->authMiddleware([
                 Authenticate::class,
             ]);

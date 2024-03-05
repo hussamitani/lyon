@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -56,6 +57,7 @@ use Illuminate\Support\Carbon;
  * @property-read \App\Models\User|null $createdBy
  * @property-read \App\Models\User|null $deletedBy
  * @property-read \App\Models\User|null $updatedBy
+ * @property-read \App\Models\InquiryStatus|null $status
  *
  * @mixin Eloquent
  */
@@ -92,5 +94,21 @@ class Inquiry extends Model
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    /**
+     * @return HasOneThrough<InquiryStatus>
+     */
+    public function status(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            InquiryStatus::class,
+            InquiryResponse::class,
+            'inquiry_id',
+            'id',
+            'id',
+            'status_id',
+        )
+            ->orderByDesc('inquiries_responses.created_at');
     }
 }

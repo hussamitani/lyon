@@ -34,7 +34,7 @@ return [
         'description' => 'pdms_manage_inquiry',
     ],
     'pdms_delete_inquiry' => [
-        'name' => 'PDMS | Delete_inquiries',
+        'name' => 'PDMS | Delete inquiries',
         'description' => 'pdms_delete_inquiry',
     ],
     'pdms_view_inquiry_response' => [

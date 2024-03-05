@@ -2,7 +2,14 @@
 
 namespace App\Filament\Pdms\Resources;
 
+use App\Filament\Pdms\Resources\InquiryResource\Pages\CreateInquiry;
+use App\Filament\Pdms\Resources\InquiryResource\Pages\EditInquiry;
+use App\Filament\Pdms\Resources\InquiryResource\Pages\ListInquiries;
+use App\Filament\Pdms\Resources\InquiryResource\Pages\ViewInquiry;
+use App\Filament\Pdms\Resources\InquiryResource\RelationManagers\ResponsesRelationManager;
 use App\Models\Inquiry;
+use App\Models\InquiryType;
+use App\Models\Patient;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,16 +27,26 @@ class InquiryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('patient_id')
-                    ->relationship('patient', 'name')
-                    ->required(),
-                Forms\Components\Select::make('type_id')
-                    ->relationship('type', 'id')
+                    ->relationship('patient', 'qid')
+                    ->searchable(['firstname', 'lastname', 'qid'])
+                    ->placeholder('Select a patient')
+                    ->searchPrompt('Name or QID')
+                    ->getOptionLabelFromRecordUsing(fn (Patient $record) => "$record->qid | {$record->firstname} {$record->lastname}")
+                    ->columnSpan(2)
                     ->required(),
                 Forms\Components\TextInput::make('subject')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\Select::make('type_id')
+                    ->relationship('type', 'id')
+                    ->getOptionLabelFromRecordUsing(fn (InquiryType $record) => $record->name)
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\RichEditor::make('description')
+                    ->label('Content')
                     ->required()
+                    ->columnSpan(2)
                     ->maxLength(255),
             ]);
     }
@@ -41,13 +58,12 @@ class InquiryResource extends Resource
                 Tables\Columns\TextColumn::make('patient.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type.id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('type.name')
+                    ->numeric()
+                    ->badge()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,6 +81,7 @@ class InquiryResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -77,16 +94,17 @@ class InquiryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ResponsesRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Pdms\Resources\InquiryResource\Pages\ListInquiries::route('/'),
-            'create' => \App\Filament\Pdms\Resources\InquiryResource\Pages\CreateInquiry::route('/create'),
-            'edit' => \App\Filament\Pdms\Resources\InquiryResource\Pages\EditInquiry::route('/{record}/edit'),
+            'index' => ListInquiries::route('/'),
+            'create' => CreateInquiry::route('/create'),
+            'view' => ViewInquiry::route('/{record}'),
+            'edit' => EditInquiry::route('/{record}/edit'),
         ];
     }
 }

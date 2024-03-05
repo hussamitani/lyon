@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Patient;
+use App\Models\Permission;
 use App\Models\User;
 
 class PatientPolicy
@@ -36,7 +37,7 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_PATIENT);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,7 +15,6 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property string $name
  * @property string $qid
  * @property mixed $password
  * @property Carbon $birthday
@@ -25,6 +25,15 @@ use Illuminate\Support\Carbon;
  * @property string|null $deleted_at
  * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read Collection<int, Appointment> $appointments
+ * @property-read int|null $appointments_count
+ * @property-read Collection<int, Inquiry> $inquiries
+ * @property-read int|null $inquiries_count
+ * @property-read Collection<int, Report> $reports
+ * @property-read int|null $reports_count
+ * @property string $firstname
+ * @property string $lastname
+ * @property-read string $name
  *
  * @method static \Database\Factories\PatientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newModelQuery()
@@ -40,17 +49,15 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereQid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Patient whereUpdatedAt($value)
- *
- * @property-read Collection<int, Appointment> $appointments
- * @property-read int|null $appointments_count
- * @property-read Collection<int, Inquiry> $inquiries
- * @property-read int|null $inquiries_count
- * @property-read Collection<int, Report> $reports
- * @property-read int|null $reports_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Patient onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Patient withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Patient withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereFirstnameAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereFirstnameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereLastnameAr($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereLastnameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereFirstname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Patient whereLastname($value)
  *
  * @mixin \Eloquent
  */
@@ -59,7 +66,6 @@ class Patient extends Authenticatable
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
-        'name',
         'qid',
         'password',
         'birthday',
@@ -80,6 +86,16 @@ class Patient extends Authenticatable
             'birthday' => 'date',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * @return Attribute<string, never>
+     */
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes): string => $attributes['firstname'].' '.$attributes['lastname']
+        );
     }
 
     /**

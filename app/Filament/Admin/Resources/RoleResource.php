@@ -30,7 +30,7 @@ class RoleResource extends Resource
                     ->multiple()
                     ->preload()
                     ->relationship('permissions', 'key')
-                    ->getOptionLabelFromRecordUsing(fn (Permission $record) => "{$record->name}")
+                    ->getOptionLabelFromRecordUsing(fn (Permission $record) => "{$record->name}"),
             ]);
     }
 
@@ -38,8 +38,6 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('key')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
@@ -64,9 +62,6 @@ class RoleResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 

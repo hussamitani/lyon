@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inquiries_responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('inquiries_id')->constrained()->references('id')->on('inquiries');
+            $table->foreignId('inquiry_id')->constrained()->references('id')->on('inquiries');
             $table->foreignId('status_id')->constrained()->references('id')->on('inquiries_statuses');
             $table->string('message');
 

@@ -118,17 +118,23 @@ class Permission extends Model
 
     protected $guarded = [];
 
-    public function name(): Attribute
+    /**
+     * @return Attribute<string, never>
+     */
+    protected function name(): Attribute
     {
         return Attribute::make(
-            get: fn (mixed $value, array $attributes) => trans("permissions.{$attributes['key']}.name")
+            get: fn (mixed $value, array $attributes): string => trans("permissions.{$attributes['key']}.name")
         );
     }
 
-    public function description(): Attribute
+    /**
+     * @return Attribute<string, never>
+     */
+    protected function description(): Attribute
     {
         return Attribute::make(
-            get: fn (mixed $value, array $attributes) => trans("permissions.{$attributes['key']}.description")
+            get: fn (mixed $value, array $attributes): string => trans("permissions.{$attributes['key']}.description")
         );
     }
 
