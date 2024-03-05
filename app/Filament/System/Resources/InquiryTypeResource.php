@@ -33,6 +33,14 @@ class InquiryTypeResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('key')
+                    ->tooltip(__('Can be renamed, but not deleted'))
+                    ->label('Locked')
+                    ->default(false)
+                    ->trueIcon('heroicon-o-lock-closed')
+                    ->falseIcon('heroicon-o-lock-open')
+                    ->width(1)
+                    ->color('gray'),
                 Tables\Columns\TextColumn::make('name')
                     ->tooltip(fn (InquiryType $record) => $record->description)
                     ->searchable(),
@@ -45,7 +53,6 @@ class InquiryTypeResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

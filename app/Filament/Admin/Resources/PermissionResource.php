@@ -27,6 +27,14 @@ class PermissionResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('key')
+                    ->tooltip(__('Can be renamed, but not deleted'))
+                    ->label('Locked')
+                    ->default(false)
+                    ->trueIcon('heroicon-o-lock-closed')
+                    ->falseIcon('heroicon-o-lock-open')
+                    ->width(1)
+                    ->color('gray'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('description'),
             ])

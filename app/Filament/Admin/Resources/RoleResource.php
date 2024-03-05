@@ -39,6 +39,14 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('key')
+                    ->default(false)
+                    ->tooltip(__('Can be renamed, but not deleted'))
+                    ->label('Locked')
+                    ->trueIcon('heroicon-o-lock-closed')
+                    ->falseIcon('heroicon-o-lock-open')
+                    ->width(1)
+                    ->color('gray'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
