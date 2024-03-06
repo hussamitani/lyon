@@ -25,7 +25,7 @@ class ReportResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('patient_id')
-                    ->relationship('patient', 'name')
+                    ->relationship('patient', 'qid')
                     ->searchable(['firstname', 'lastname', 'qid'])
                     ->placeholder('Select a patient')
                     ->searchPrompt('Name or QID')

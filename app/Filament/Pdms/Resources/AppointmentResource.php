@@ -22,7 +22,7 @@ class AppointmentResource extends Resource
             ->schema([
                 Forms\Components\Select::make('patient_id')
                     ->columnSpan(2)
-                    ->relationship('patient', 'name')
+                    ->relationship('patient', 'qid')
                     ->searchable(['firstname', 'lastname', 'qid'])
                     ->placeholder('Select a patient')
                     ->searchPrompt('Name or QID')
