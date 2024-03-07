@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
- * @method static \Database\Factories\InquiryStatusFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus query()
@@ -46,7 +44,7 @@ use Illuminate\Support\Carbon;
  */
 class InquiryStatus extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'inquiries_statuses';
 

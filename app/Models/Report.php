@@ -46,20 +46,6 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Report whereUpdatedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Report whereFiles($value)
  *
- * @property int|null $created_by_id
- * @property int|null $updated_by_id
- * @property int|null $deleted_by_id
- * @property Carbon|null $deleted_at
- *
- * @method static \Illuminate\Database\Eloquent\Builder|Report whereCreatedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Report whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Report whereDeletedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Report whereUpdatedById($value)
- *
- * @property-read \App\Models\User|null $createdBy
- * @property-read \App\Models\User|null $deletedBy
- * @property-read \App\Models\User|null $updatedBy
- *
  * @mixin \Eloquent
  */
 class Report extends Model
