@@ -133,6 +133,26 @@ class Permission extends Model
     }
 
     /**
+     * @return Attribute<string, never>
+     */
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes): string => trans("permissions.{$attributes['key']}.name")
+        );
+    }
+
+    /**
+     * @return Attribute<string, never>
+     */
+    protected function description(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes): string => trans("permissions.{$attributes['key']}.description")
+        );
+    }
+
+    /**
      * @return BelongsToMany<Role>
      */
     public function roles(): BelongsToMany

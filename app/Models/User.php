@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\HasPermission;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -40,12 +41,12 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  *
- * @property-read Collection<int, \App\Models\Permission> $permissions
+ * @property-read Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasAvatar
 {
     use HasFactory, HasPermission, Notifiable;
 
@@ -91,5 +92,10 @@ class User extends Authenticatable
             Permission::class,
             'users_permissions',
         );
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return 'https://ui-avatars.com/api/?name='.str_replace(' ', '+', $this->name);
     }
 }

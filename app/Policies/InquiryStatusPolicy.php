@@ -44,6 +44,10 @@ class InquiryStatusPolicy
      */
     public function delete(User $user, InquiryStatus $inquiryStatus): bool
     {
+        if ($inquiryStatus->key) {
+            return false;
+        }
+
         return true;
     }
 

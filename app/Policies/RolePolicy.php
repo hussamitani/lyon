@@ -44,6 +44,10 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
+        if ($role->key) {
+            return false;
+        }
+
         return true;
     }
 

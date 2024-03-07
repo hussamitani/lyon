@@ -36,6 +36,12 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus whereUpdatedAt($value)
  *
+ * @property string|null $description
+ * @property string $status_category
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryStatus whereStatusCategory($value)
+ *
  * @mixin \Eloquent
  */
 class InquiryStatus extends Model

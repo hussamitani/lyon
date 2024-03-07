@@ -15,8 +15,17 @@ use Illuminate\Support\Carbon;
  * @property int $patient_id
  * @property string $subject
  * @property string $description
+ * @property array|null $files
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property int|null $created_by_id
+ * @property int|null $updated_by_id
+ * @property int|null $deleted_by_id
+ * @property-read User|null $createdBy
+ * @property-read User|null $deletedBy
+ * @property-read User|null $updatedBy
+ * @property-read Patient $patient
  *
  * @method static \Database\Factories\ReportFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Report newModelQuery()
@@ -28,12 +37,14 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Report wherePatientId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Report whereSubject($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Report whereUpdatedAt($value)
- *
- * @property-read Patient $patient
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Report onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Report withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Report withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereCreatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereDeletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereUpdatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Report whereFiles($value)
  *
  * @property int|null $created_by_id
  * @property int|null $updated_by_id
@@ -60,6 +71,16 @@ class Report extends Model
         parent::booted();
 
         self::observe(ReportObserver::class);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function casts(): array
+    {
+        return [
+            'files' => 'array',
+        ];
     }
 
     /**

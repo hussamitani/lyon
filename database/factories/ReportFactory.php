@@ -2,22 +2,35 @@
 
 namespace Database\Factories;
 
+use App\Models\Patient;
+use App\Models\Report;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Report>
+ * @extends Factory<Report>
  */
 class ReportFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Report::class;
+
     public function definition(): array
     {
         return [
-            //
+            'subject' => fake()->realText(25),
+            'description' => fake()->realText(),
         ];
+    }
+
+    public function configure(): Factory|InquiryFactory
+    {
+        return $this->afterMaking(function (Report $report) {
+            if (! $report->patient_id) {
+                $report->patient_id = Patient::all()->random()->id;
+            }
+            if (! $report->created_by_id) {
+                $report->created_by_id = User::all()->random()->id;
+            }
+        });
     }
 }

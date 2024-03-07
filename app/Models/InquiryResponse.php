@@ -5,26 +5,47 @@ namespace App\Models;
 use App\Concerns\HasAuthor;
 use App\Observers\InquiryResponseObserver;
 use Eloquent;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
+ * @property int $id
+ * @property int $inquiry_id
+ * @property int $status_id
+ * @property string $message
+ * @property int|null $created_by_id
+ * @property int|null $updated_by_id
+ * @property int|null $deleted_by_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read User|null $createdBy
+ * @property-read User|null $deletedBy
+ * @property-read User|null $updatedBy
+ * @property-read Inquiry $inquiry
+ * @property-read InquiryStatus|null $status
+ *
  * @method static \Database\Factories\InquiryResponseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse query()
- *
- * @property-read Collection<int, Inquiry> $inquiries
- * @property-read int|null $inquiries_count
- * @property-read InquiryStatus|null $status
- *
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereCreatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereDeletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereInquiriesId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereStatusId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereUpdatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereInquiryId($value)
  *
  * @property int $id
  * @property int $inquiries_id
@@ -68,11 +89,11 @@ class InquiryResponse extends Model
     }
 
     /**
-     * @return HasMany<Inquiry>
+     * @return BelongsTo<Inquiry, InquiryResponse>
      */
-    public function inquiries(): HasMany
+    public function inquiry(): BelongsTo
     {
-        return $this->hasMany(Inquiry::class);
+        return $this->belongsTo(Inquiry::class);
     }
 
     /**
