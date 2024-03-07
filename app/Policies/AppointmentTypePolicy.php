@@ -44,6 +44,10 @@ class AppointmentTypePolicy
      */
     public function delete(User $user, AppointmentType $appointmentType): bool
     {
+        if ($appointmentType->key) {
+            return false;
+        }
+
         return true;
     }
 
