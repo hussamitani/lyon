@@ -21,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property mixed $password
  * @property Carbon $birthday
  * @property string $gender
+ * @property-read string $name
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -33,8 +34,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $inquiries_count
  * @property-read Collection<int, Report> $reports
  * @property-read int|null $reports_count
-
- * @property-read string $name
+ *
  *
  * @method static \Database\Factories\PatientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newModelQuery()

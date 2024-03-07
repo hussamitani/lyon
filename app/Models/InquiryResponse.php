@@ -47,32 +47,6 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereUpdatedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereInquiryId($value)
  *
- * @property int $id
- * @property int $inquiries_id
- * @property int $status_id
- * @property string $message
- * @property int|null $created_by_id
- * @property int|null $updated_by_id
- * @property int|null $deleted_by_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- *
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereCreatedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereDeletedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereInquiriesId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereMessage($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereStatusId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|InquiryResponse whereUpdatedById($value)
- *
- * @property-read \App\Models\User|null $createdBy
- * @property-read \App\Models\User|null $deletedBy
- * @property-read \App\Models\User|null $updatedBy
- *
  * @mixin Eloquent
  */
 class InquiryResponse extends Model
