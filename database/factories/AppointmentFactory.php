@@ -22,7 +22,7 @@ class AppointmentFactory extends Factory
             'subject' => fake()->realText(25),
             'description' => fake()->realText(),
             'location' => fake()->realText(),
-            'begins_at' => $begins_at = fake()->dateTime(),
+            'begins_at' => ($begins_at = fake()->dateTime())->format('Y-m-d H:i:s'),
             'ends_at' => $begins_at->add(DateInterval::createFromDateString('2 hours')),
         ];
     }
