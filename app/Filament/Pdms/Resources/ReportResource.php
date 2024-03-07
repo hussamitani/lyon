@@ -20,11 +20,14 @@ class ReportResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-plus';
 
+    protected static ?int $navigationSort = 4;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('patient_id')
+                    ->getOptionLabelFromRecordUsing(fn (Patient $record) => "$record->qid | {$record->firstname} {$record->lastname}")
                     ->relationship('patient', 'qid')
                     ->searchable(['firstname', 'lastname', 'qid'])
                     ->placeholder('Select a patient')
@@ -40,6 +43,8 @@ class ReportResource extends Resource
                 Forms\Components\FileUpload::make('files')
                     ->multiple()
                     ->preserveFilenames()
+                    /* TODO: Grab patient_id from select above instead of executing another query to the database */
+                    /* @phpstan-ignore-next-line */
                     ->directory(fn (Forms\Get $get) => Patient::find($get('patient_id'))->qid)
                     ->downloadable(),
             ])->columns(1);
@@ -49,9 +54,20 @@ class ReportResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('patient.firstname')
+                    ->label('Firstname')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('patient.lastname')
+                    ->label('Lastname')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('patient.qid')
+                    ->label('QID')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('patient.name')
-                    ->numeric()
-                    ->sortable(),
+                    ->prefix(fn (Report $record) => "{$record->patient->qid} | "),
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable(),
             ])
@@ -59,11 +75,11 @@ class ReportResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

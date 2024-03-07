@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\InquiryResponse;
 use Illuminate\Database\Seeder;
 
 class InquiryResponseSeeder extends Seeder
@@ -11,6 +12,6 @@ class InquiryResponseSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        InquiryResponse::factory()->count(1500)->create();
     }
 }

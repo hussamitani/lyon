@@ -22,6 +22,8 @@ class InquiryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -55,13 +57,24 @@ class InquiryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('patient.firstname')
+                    ->label('Firstname')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('patient.lastname')
+                    ->label('Lastname')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('patient.qid')
+                    ->label('QID')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('patient.name')
-                    ->numeric()
-                    ->sortable(),
+                    ->prefix(fn (Inquiry $record) => "{$record->patient->qid} | "),
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type.name')
-                    ->numeric()
+                    ->color('info')
                     ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -86,7 +99,6 @@ class InquiryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

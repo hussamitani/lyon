@@ -18,6 +18,8 @@ class PatientResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -51,14 +53,14 @@ class PatientResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('firstname')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('firstname')
+                Tables\Columns\TextColumn::make('lastname')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('qid')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('birthday')
-                    ->date()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->sortable(),
+                    ->date('d.m.Y')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('gender')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
