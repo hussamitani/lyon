@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Concerns\HasAuthor;
 use App\Observers\ReportObserver;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -26,6 +28,8 @@ use Illuminate\Support\Carbon;
  * @property-read User|null $deletedBy
  * @property-read User|null $updatedBy
  * @property-read Patient $patient
+ * @property-read Collection<int, ReportVersion> $versions
+ * @property-read int|null $versions_count
  *
  * @method static \Database\Factories\ReportFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Report newModelQuery()
@@ -75,5 +79,13 @@ class Report extends Model
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    /**
+     * @return HasMany<ReportVersion>
+     */
+    public function versions(): HasMany
+    {
+        return $this->hasMany(ReportVersion::class);
     }
 }

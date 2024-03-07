@@ -3,27 +3,48 @@
 namespace App\Observers;
 
 use App\Models\Appointment;
+use App\Models\AppointmentVersion;
 use Auth;
 
 class AppointmentObserver
 {
+    public function created(Appointment $appointment): void
+    {
+        dispatch(fn () => AppointmentVersion::fromAppointment($appointment));
+    }
+
     public function creating(Appointment $appointment): void
     {
-        $appointment->created_by_id = (int) Auth::id();
+        Auth::check() && $appointment->created_by_id = (int) Auth::id();
+    }
+
+    public function updated(Appointment $appointment): void
+    {
+        dispatch(fn () => AppointmentVersion::fromAppointment($appointment));
     }
 
     public function updating(Appointment $appointment): void
     {
-        $appointment->updated_by_id = (int) Auth::id();
+        Auth::check() && $appointment->updated_by_id = (int) Auth::id();
+    }
+
+    public function deleted(Appointment $appointment): void
+    {
+        dispatch(fn () => AppointmentVersion::fromAppointment($appointment));
     }
 
     public function deleting(Appointment $appointment): void
     {
-        $appointment->deleted_by_id = (int) Auth::id();
+        Auth::check() && $appointment->deleted_by_id = (int) Auth::id();
     }
 
     public function restored(Appointment $appointment): void
     {
-        $appointment->deleted_by_id = null;
+        dispatch(fn () => AppointmentVersion::fromAppointment($appointment));
+    }
+
+    public function restoring(Appointment $appointment): void
+    {
+        Auth::check() && $appointment->deleted_by_id = null;
     }
 }

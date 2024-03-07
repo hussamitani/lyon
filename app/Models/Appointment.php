@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Concerns\HasAuthor;
 use App\Observers\AppointmentObserver;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -18,9 +21,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $subject
  * @property string $description
  * @property string $location
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read Patient $patient
+ * @property-read AppointmentType $type
+ * @property int|null $created_by_id
+ * @property int|null $updated_by_id
+ * @property int|null $deleted_by_id
+ * @property-read User|null $createdBy
+ * @property-read User|null $deletedBy
+ * @property-read User|null $updatedBy
+ * @property-read Collection<int, AppointmentVersion> $versions
+ * @property-read int|null $versions_count
  *
  * @method static \Database\Factories\AppointmentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment newModelQuery()
@@ -37,23 +50,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereSubject($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereUpdatedAt($value)
- *
- * @property-read \App\Models\Patient $patient
- * @property-read \App\Models\AppointmentType $type
- * @property int|null $created_by_id
- * @property int|null $updated_by_id
- * @property int|null $deleted_by_id
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereCreatedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereDeletedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereUpdatedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Appointment withoutTrashed()
- *
- * @property-read \App\Models\User|null $createdBy
- * @property-read \App\Models\User|null $deletedBy
- * @property-read \App\Models\User|null $updatedBy
  *
  * @mixin \Eloquent
  */
@@ -93,5 +95,13 @@ class Appointment extends Model
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    /**
+     * @return HasMany<AppointmentVersion>
+     */
+    public function versions(): HasMany
+    {
+        return $this->hasMany(AppointmentVersion::class);
     }
 }

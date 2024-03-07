@@ -35,7 +35,6 @@ use Illuminate\Support\Carbon;
  * @property-read Collection<int, Report> $reports
  * @property-read int|null $reports_count
  *
- *
  * @method static \Database\Factories\PatientFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Patient newQuery()

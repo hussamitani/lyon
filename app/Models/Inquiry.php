@@ -23,6 +23,19 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read Patient $patient
+ * @property-read Collection<int, InquiryResponse> $responses
+ * @property-read int|null $responses_count
+ * @property-read InquiryType $type
+ * @property int|null $created_by_id
+ * @property int|null $updated_by_id
+ * @property int|null $deleted_by_id
+ * @property-read User|null $createdBy
+ * @property-read User|null $deletedBy
+ * @property-read User|null $updatedBy
+ * @property-read InquiryStatus|null $status
+ * @property-read Collection<int, InquiryVersion> $versions
+ * @property-read int|null $versions_count
  *
  * @method static \Database\Factories\InquiryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry newModelQuery()
@@ -36,28 +49,12 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereSubject($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereUpdatedAt($value)
- *
- * @property-read Patient $patient
- * @property-read Collection<int, InquiryResponse> $responses
- * @property-read int|null $responses_count
- * @property-read InquiryType $type
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry withoutTrashed()
- *
- * @property int|null $created_by_id
- * @property int|null $updated_by_id
- * @property int|null $deleted_by_id
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereCreatedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereDeletedById($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Inquiry whereUpdatedById($value)
- *
- * @property-read \App\Models\User|null $createdBy
- * @property-read \App\Models\User|null $deletedBy
- * @property-read \App\Models\User|null $updatedBy
- * @property-read \App\Models\InquiryStatus|null $status
  *
  * @mixin Eloquent
  */
@@ -110,5 +107,13 @@ class Inquiry extends Model
             'status_id',
         )
             ->orderByDesc('inquiries_responses.created_at');
+    }
+
+    /**
+     * @return HasMany<InquiryVersion>
+     */
+    public function versions(): HasMany
+    {
+        return $this->hasMany(InquiryVersion::class);
     }
 }
