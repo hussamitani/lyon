@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @method static \Database\Factories\InquiryTypeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryType newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryType query()
@@ -41,7 +39,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class InquiryType extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'inquiries_types';
 

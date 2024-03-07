@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
@@ -19,7 +18,6 @@ use Illuminate\Support\Carbon;
  * @property-read Collection<int, Role> $roles
  * @property-read int|null $roles_count
  *
- * @method static \Database\Factories\PermissionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Permission query()
@@ -34,8 +32,6 @@ use Illuminate\Support\Carbon;
  */
 class Permission extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     public const ALL = [

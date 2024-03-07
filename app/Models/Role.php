@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Database\Factories\RoleFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,7 +22,6 @@ use Illuminate\Support\Carbon;
  * @property-read Collection<int, User> $users
  * @property-read int|null $users_count
  *
- * @method static RoleFactory factory($count = null, $state = [])
  * @method static Builder|Role newModelQuery()
  * @method static Builder|Role newQuery()
  * @method static Builder|Role query()
@@ -43,7 +40,7 @@ use Illuminate\Support\Carbon;
  */
 class Role extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $guarded = [];
 
