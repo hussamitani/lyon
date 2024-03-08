@@ -51,6 +51,7 @@ class SystemPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->topNavigation()
             ->userMenuItems(FilamentPanelHelper::userMenuItems())
             ->authMiddleware([
                 Authenticate::class,

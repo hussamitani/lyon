@@ -5,7 +5,9 @@ namespace App\Filament\Pdms\Resources\ReportResource\Pages;
 use App\Concerns\HasInfoListDataSection;
 use App\Filament\Pdms\Resources\ReportResource;
 use App\Models\Report;
+use Filament\Actions\EditAction;
 use Filament\Infolists\Components;
+use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
@@ -15,9 +17,21 @@ use Illuminate\Contracts\Support\Htmlable;
  */
 class ViewReport extends ViewRecord
 {
+    use HasInfoListDataSection;
+
     protected static string $resource = ReportResource::class;
 
-    use HasInfoListDataSection;
+    public function getHeading(): string|Htmlable
+    {
+        return $this->record->subject;
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            EditAction::make(),
+        ];
+    }
 
     public function infolist(Infolist $infolist): Infolist
     {
@@ -36,14 +50,15 @@ class ViewReport extends ViewRecord
                     ->columns()
                     ->columnSpan(3)
                     ->heading(),
-                $this->getInfolistDataSection(),
+                Tabs::make('Data')->schema([
+                    $this->getInfolistAuthorTab(),
+                    $this->getInfolistVersionsTab([
+                        Components\TextEntry::make('subject')->columnSpan(2),
+                        Components\TextEntry::make('description')->columnSpan(2),
+                    ]),
+                ])->columns(2),
             ]),
             Components\TextEntry::make('files'),
         ]);
-    }
-
-    public function getHeading(): string|Htmlable
-    {
-        return $this->record->subject;
     }
 }

@@ -5,9 +5,11 @@ namespace App\Filament\Pdms\Resources\AppointmentResource\Pages;
 use App\Concerns\HasInfoListDataSection;
 use App\Filament\Pdms\Resources\AppointmentResource;
 use App\Models\Appointment;
+use Filament\Actions\EditAction;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
@@ -21,6 +23,13 @@ class ViewAppointment extends ViewRecord
     use HasInfoListDataSection;
 
     protected static string $resource = AppointmentResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            EditAction::make(),
+        ];
+    }
 
     public function getHeading(): string|Htmlable
     {
@@ -55,7 +64,16 @@ class ViewAppointment extends ViewRecord
                     ->columns(3)
                     ->heading()
                     ->columnSpan(3),
-                $this->getInfolistDataSection(),
+                Tabs::make('Data')->columns(2)->schema([
+                    $this->getInfolistAuthorTab(),
+                    $this->getInfolistVersionsTab([
+                        TextEntry::make('subject')->columnSpan(2),
+                        TextEntry::make('description')->columnSpan(2),
+                        TextEntry::make('location')->columnSpan(2),
+                        TextEntry::make('begins_at')->columnSpan(1)->dateTime('d.m.Y H:i'),
+                        TextEntry::make('ends_at')->columnSpan(1)->dateTime('d.m.Y H:i'),
+                    ]),
+                ])->columnSpan(1),
             ]),
         ]);
     }

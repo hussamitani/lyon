@@ -2,15 +2,14 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     public function run(): void
     {
+        User::factory()->create(['email' => 'admin@pdms.com', 'name' => 'Administrator']);
         $this->call(PatientSeeder::class);
         $this->call(AppointmentSeeder::class);
         $this->call(ReportSeeder::class);

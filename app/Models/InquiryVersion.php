@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Concerns\HasAuthor;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Support\Carbon;
 
 /**
@@ -33,11 +36,21 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryVersion whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|InquiryVersion whereUpdatedById($value)
  *
+ * @property-read \App\Models\User|null $createdBy
+ * @property-read \App\Models\User|null $deletedBy
+ * @property-read \App\Models\InquiryStatus|null $status
+ * @property-read \App\Models\InquiryType $type
+ * @property-read \App\Models\User|null $updatedBy
+ *
  * @mixin \Eloquent
  */
 class InquiryVersion extends Model
 {
+    use HasAuthor;
+
     protected $table = 'inquiries_versions';
+
+    public $timestamps = false;
 
     /**
      * @return string[]
@@ -51,7 +64,32 @@ class InquiryVersion extends Model
         ];
     }
 
-    public static function createFromInquiry(Inquiry $inquiry): self
+    /**
+     * @return BelongsTo<InquiryType, InquiryVersion>
+     */
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(InquiryType::class);
+    }
+
+    /**
+     * @return HasOneThrough<InquiryStatus>
+     */
+    public function status(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            InquiryStatus::class,
+            InquiryResponse::class,
+            'inquiry_id',
+            'id',
+            'inquiry_id',
+            'status_id',
+        )
+            ->where('inquiries_responses.created_at', '<', 'inquiries_versions.created_at')
+            ->orderByDesc('inquiries_responses.created_at');
+    }
+
+    public static function fromInquiry(Inquiry $inquiry): self
     {
         $inquiryData = $inquiry->toArray();
         $inquiryData['inquiry_id'] = $inquiryData['id'];

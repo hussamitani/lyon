@@ -77,6 +77,24 @@ class InquiryResource extends Resource
                     ->color('info')
                     ->badge()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('status.status_category')
+                    ->badge()
+                    ->default('open')
+                    ->formatStateUsing(fn (string $state) => strtoupper($state))
+                    ->color(fn (string $state) => match ($state) {
+                        'awaiting' => 'warning',
+                        'processing' => 'info',
+                        'declined' => 'danger',
+                        'approved' => 'success',
+                        default => 'gray',
+                    })
+                    ->icon(fn (string $state) => match ($state) {
+                        'awaiting' => 'heroicon-o-question-mark-circle',
+                        'processing' => 'heroicon-o-clock',
+                        'declined' => 'heroicon-o-x-circle',
+                        'approved' => 'heroicon-o-check',
+                        default => 'heroicon-o-bell',
+                    }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

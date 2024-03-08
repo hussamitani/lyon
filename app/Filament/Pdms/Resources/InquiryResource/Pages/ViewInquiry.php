@@ -5,9 +5,11 @@ namespace App\Filament\Pdms\Resources\InquiryResource\Pages;
 use App\Concerns\HasInfoListDataSection;
 use App\Filament\Pdms\Resources\InquiryResource;
 use App\Models\Inquiry;
+use Filament\Actions\EditAction;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
@@ -25,6 +27,13 @@ class ViewInquiry extends ViewRecord
     public function getHeading(): string|Htmlable
     {
         return $this->record->subject;
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            EditAction::make(),
+        ];
     }
 
     public function infolist(Infolist $infolist): Infolist
@@ -65,7 +74,14 @@ class ViewInquiry extends ViewRecord
                     ->columns()
                     ->columnSpan(3)
                     ->heading(),
-                $this->getInfolistDataSection(),
+                Tabs::make('Data')->schema([
+                    $this->getInfolistAuthorTab(),
+                    $this->getInfolistVersionsTab([
+                        TextEntry::make('subject')->columnSpan(2),
+                        TextEntry::make('description')->columnSpan(2),
+                        TextEntry::make('type.name')->badge()->columnSpan(2),
+                    ]),
+                ])->columns(2),
             ]),
         ]);
     }

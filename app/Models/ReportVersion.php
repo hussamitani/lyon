@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\HasAuthor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -33,11 +34,19 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|ReportVersion whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ReportVersion whereUpdatedById($value)
  *
+ * @property-read \App\Models\User|null $createdBy
+ * @property-read \App\Models\User|null $deletedBy
+ * @property-read \App\Models\User|null $updatedBy
+ *
  * @mixin \Eloquent
  */
 class ReportVersion extends Model
 {
+    use HasAuthor;
+
     protected $table = 'reports_versions';
+
+    public $timestamps = false;
 
     /**
      * @return string[]

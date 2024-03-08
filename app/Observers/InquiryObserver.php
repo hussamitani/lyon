@@ -10,7 +10,7 @@ class InquiryObserver
 {
     public function created(Inquiry $inquiry): void
     {
-        dispatch(fn () => InquiryVersion::createFromInquiry($inquiry));
+        dispatch(fn () => InquiryVersion::fromInquiry($inquiry));
     }
 
     public function creating(Inquiry $inquiry): void
@@ -20,7 +20,7 @@ class InquiryObserver
 
     public function updated(Inquiry $inquiry): void
     {
-        dispatch(fn () => InquiryVersion::createFromInquiry($inquiry));
+        dispatch(fn () => InquiryVersion::fromInquiry($inquiry));
     }
 
     public function updating(Inquiry $inquiry): void
@@ -30,7 +30,7 @@ class InquiryObserver
 
     public function deleted(Inquiry $inquiry): void
     {
-        dispatch(fn () => InquiryVersion::createFromInquiry($inquiry));
+        dispatch(fn () => InquiryVersion::fromInquiry($inquiry));
     }
 
     public function deleting(Inquiry $inquiry): void
@@ -40,7 +40,7 @@ class InquiryObserver
 
     public function restored(Inquiry $inquiry): void
     {
-        dispatch(fn () => InquiryVersion::createFromInquiry($inquiry));
+        dispatch(fn () => InquiryVersion::fromInquiry($inquiry));
     }
 
     public function restoring(Inquiry $inquiry): void

@@ -37,7 +37,7 @@ class InquiriesRelationManager extends RelationManager
                     ->color('gray'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->default('open')
+                    ->default(new InquiryStatus(['status' => 'Open. Nothing happened yet.', 'status_category' => 'open']))
                     ->formatStateUsing(fn (InquiryStatus $state) => strtoupper($state->status_category))
                     ->tooltip(fn (InquiryStatus $state) => $state->status)
                     ->color(fn (InquiryStatus $state) => match ($state->status_category) {
