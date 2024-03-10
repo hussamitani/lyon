@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('qid')->unique();
             $table->string('password');
             $table->date('birthday');
-            $table->char('gender', 6);
+            $table->char('gender');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
