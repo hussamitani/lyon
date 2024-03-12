@@ -54,6 +54,7 @@ class PdmsPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->topNavigation()
+            ->readOnlyRelationManagersOnResourceViewPagesByDefault(false)
             ->userMenuItems(FilamentPanelHelper::userMenuItems())
             ->authMiddleware([
                 Authenticate::class,

@@ -40,7 +40,7 @@ class ViewInquiry extends ViewRecord
     {
         return $infolist->schema([
             Grid::make(4)->schema([
-                Section::make('Test')->schema([
+                Section::make('Data')->schema([
                     TextEntry::make('patient.name'),
                     TextEntry::make('patient.qid')
                         ->label('QID'),
@@ -74,14 +74,16 @@ class ViewInquiry extends ViewRecord
                     ->columns()
                     ->columnSpan(3)
                     ->heading(),
-                Tabs::make('Data')->schema([
+                Tabs::make('Author')->schema([
                     $this->getInfolistAuthorTab(),
                     $this->getInfolistVersionsTab([
                         TextEntry::make('subject')->columnSpan(2),
                         TextEntry::make('description')->columnSpan(2),
                         TextEntry::make('type.name')->badge()->columnSpan(2),
                     ]),
-                ])->columns(2),
+                ])
+                    ->columnSpan(1)
+                    ->columns(2),
             ]),
         ]);
     }

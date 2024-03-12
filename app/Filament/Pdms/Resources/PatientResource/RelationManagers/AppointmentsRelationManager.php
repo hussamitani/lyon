@@ -28,11 +28,13 @@ class AppointmentsRelationManager extends RelationManager
                 Forms\Components\DateTimePicker::make('ends_at')
                     ->format('d.m.Y H:i')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\RichEditor::make('location')
+                    ->columnSpan(2)
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('location')
+                Forms\Components\RichEditor::make('description')
                     ->required()
+                    ->columnSpan(2)
                     ->maxLength(255),
             ]);
     }
