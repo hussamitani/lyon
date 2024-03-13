@@ -27,6 +27,8 @@ class PdmsPanelProvider extends PanelProvider
             ->id('pdms')
             ->path('pdms')
             ->brandName('PDMS / App')
+            ->brandLogo(asset('images/Qatar_Logo.png'))
+            ->brandLogoHeight('58px')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->login()
@@ -53,6 +55,7 @@ class PdmsPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->darkMode(false)
             ->topNavigation()
             ->readOnlyRelationManagersOnResourceViewPagesByDefault(false)
             ->userMenuItems(FilamentPanelHelper::userMenuItems())
