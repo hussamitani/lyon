@@ -17,22 +17,28 @@ class RoleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-finger-print';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
-                Forms\Components\Select::make('permissions')
-                    ->columnSpan(2)
-                    ->multiple()
-                    ->preload()
-                    ->relationship('permissions', 'key')
-                    ->getOptionLabelFromRecordUsing(fn (Permission $record) => "{$record->name}"),
-            ]);
+                Forms\Components\Section::make('Role')->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Textarea::make('description')
+                        ->maxLength(255),
+                ])->columns(1),
+                Forms\Components\Section::make('Permissions')->schema([
+                    Forms\Components\CheckboxList::make('permissions')
+                        ->hiddenLabel()
+                        ->relationship('permissions', 'permissions')
+                        ->columns(3)
+                        ->options(Permission::all()->pluck('name', 'id'))
+                        ->descriptions(Permission::all()->pluck('description', 'id')),
+                ])->columns(1),
+            ])->columns(2);
     }
 
     public static function table(Table $table): Table
