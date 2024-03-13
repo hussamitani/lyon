@@ -39,8 +39,14 @@ class AppointmentResource extends Resource
                     ->label('Appointment Type')
                     ->required(),
                 Forms\Components\DateTimePicker::make('begins_at')
+                    ->minDate(now()->startOfHour())
+                    ->seconds(false)
+                    ->minutesStep(5)
                     ->required(),
                 Forms\Components\DateTimePicker::make('ends_at')
+                    ->minDate(now()->startOfHour())
+                    ->seconds(false)
+                    ->minutesStep(5)
                     ->required(),
                 Forms\Components\TextInput::make('location')
                     ->required()
