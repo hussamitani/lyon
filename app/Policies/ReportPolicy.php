@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\Report;
 use App\Models\User;
 
@@ -12,7 +13,7 @@ class ReportPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_REPORT);
     }
 
     /**
@@ -20,7 +21,7 @@ class ReportPolicy
      */
     public function view(User $user, Report $report): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_REPORT);
     }
 
     /**
@@ -28,7 +29,7 @@ class ReportPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_REPORT);
     }
 
     /**
@@ -36,7 +37,7 @@ class ReportPolicy
      */
     public function update(User $user, Report $report): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_REPORT);
     }
 
     /**
@@ -44,7 +45,7 @@ class ReportPolicy
      */
     public function delete(User $user, Report $report): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_REPORT);
     }
 
     /**
@@ -52,7 +53,7 @@ class ReportPolicy
      */
     public function restore(User $user, Report $report): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_REPORT);
     }
 
     /**
@@ -60,6 +61,6 @@ class ReportPolicy
      */
     public function forceDelete(User $user, Report $report): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_REPORT);
     }
 }

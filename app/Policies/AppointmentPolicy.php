@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Appointment;
+use App\Models\Permission;
 use App\Models\User;
 
 class AppointmentPolicy
@@ -12,7 +13,7 @@ class AppointmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_APPOINTMENT);
     }
 
     /**
@@ -20,7 +21,7 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_APPOINTMENT);
     }
 
     /**
@@ -28,7 +29,7 @@ class AppointmentPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_APPOINTMENT);
     }
 
     /**
@@ -36,7 +37,7 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_APPOINTMENT);
     }
 
     /**
@@ -44,7 +45,7 @@ class AppointmentPolicy
      */
     public function delete(User $user, Appointment $appointment): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_APPOINTMENT);
     }
 
     /**
@@ -52,7 +53,7 @@ class AppointmentPolicy
      */
     public function restore(User $user, Appointment $appointment): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_APPOINTMENT);
     }
 
     /**
@@ -60,6 +61,6 @@ class AppointmentPolicy
      */
     public function forceDelete(User $user, Appointment $appointment): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_APPOINTMENT);
     }
 }

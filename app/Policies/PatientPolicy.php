@@ -13,7 +13,7 @@ class PatientPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_PATIENT);
     }
 
     /**
@@ -21,7 +21,7 @@ class PatientPolicy
      */
     public function view(User $user, Patient $patient): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_PATIENT);
     }
 
     /**
@@ -29,7 +29,7 @@ class PatientPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_PATIENT);
     }
 
     /**
@@ -45,7 +45,7 @@ class PatientPolicy
      */
     public function delete(User $user, Patient $patient): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_PATIENT);
     }
 
     /**
@@ -53,7 +53,7 @@ class PatientPolicy
      */
     public function restore(User $user, Patient $patient): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_PATIENT);
     }
 
     /**
@@ -61,6 +61,6 @@ class PatientPolicy
      */
     public function forceDelete(User $user, Patient $patient): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_PATIENT);
     }
 }

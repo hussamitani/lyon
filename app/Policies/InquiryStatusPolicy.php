@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\InquiryStatus;
+use App\Models\Permission;
 use App\Models\User;
 
 class InquiryStatusPolicy
@@ -12,7 +13,7 @@ class InquiryStatusPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 
     /**
@@ -20,7 +21,7 @@ class InquiryStatusPolicy
      */
     public function view(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 
     /**
@@ -28,7 +29,7 @@ class InquiryStatusPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 
     /**
@@ -36,7 +37,7 @@ class InquiryStatusPolicy
      */
     public function update(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 
     /**
@@ -48,7 +49,11 @@ class InquiryStatusPolicy
             return false;
         }
 
-        return true;
+        if ($inquiryStatus->responses()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 
     /**
@@ -56,7 +61,7 @@ class InquiryStatusPolicy
      */
     public function restore(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 
     /**
@@ -64,6 +69,14 @@ class InquiryStatusPolicy
      */
     public function forceDelete(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return true;
+        if ($inquiryStatus->key) {
+            return false;
+        }
+
+        if ($inquiryStatus->responses()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
     }
 }

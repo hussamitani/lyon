@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Inquiry;
+use App\Models\Permission;
 use App\Models\User;
 
 class InquiryPolicy
@@ -12,7 +13,7 @@ class InquiryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_INQUIRY);
     }
 
     /**
@@ -20,7 +21,7 @@ class InquiryPolicy
      */
     public function view(User $user, Inquiry $inquiry): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_VIEW_INQUIRY);
     }
 
     /**
@@ -28,7 +29,7 @@ class InquiryPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_INQUIRY);
     }
 
     /**
@@ -36,7 +37,7 @@ class InquiryPolicy
      */
     public function update(User $user, Inquiry $inquiry): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_MANAGE_INQUIRY);
     }
 
     /**
@@ -44,7 +45,7 @@ class InquiryPolicy
      */
     public function delete(User $user, Inquiry $inquiry): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY);
     }
 
     /**
@@ -52,7 +53,7 @@ class InquiryPolicy
      */
     public function restore(User $user, Inquiry $inquiry): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY);
     }
 
     /**
@@ -60,6 +61,6 @@ class InquiryPolicy
      */
     public function forceDelete(User $user, Inquiry $inquiry): bool
     {
-        return true;
+        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY);
     }
 }
