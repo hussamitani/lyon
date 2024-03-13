@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create(['email' => 'admin@pdms.com', 'name' => 'Administrator']);
-        $user->roles()->attach(Role::find(['key' => 'administrator']));
+        $user->roles()->attach(Role::where(['key' => 'administrator'])->first());
         $this->call(PatientSeeder::class);
         $this->call(AppointmentSeeder::class);
         $this->call(ReportSeeder::class);

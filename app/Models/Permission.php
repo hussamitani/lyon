@@ -36,6 +36,7 @@ class Permission extends Model
 
     public const ALL = [
         self::PDMS_VIEW_PATIENT,
+        self::PDMS_CREATE_PATIENT,
         self::PDMS_MANAGE_PATIENT,
         self::PDMS_DELETE_PATIENT,
         self::PDMS_VIEW_APPOINTMENT,
@@ -62,7 +63,9 @@ class Permission extends Model
         self::ADMIN_VIEW_PERMISSIONS,
     ];
 
-    public const PDMS_VIEW_PATIENT = 'pdms_create_patient';
+    public const PDMS_VIEW_PATIENT = 'pdms_view_patient';
+
+    public const PDMS_CREATE_PATIENT = 'pdms_create_patient';
 
     public const PDMS_MANAGE_PATIENT = 'pdms_manage_patient';
 
