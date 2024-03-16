@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 
@@ -12,7 +13,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::ADMIN_VIEW_ROLES);
     }
 
     /**
@@ -20,7 +21,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return true;
+        return $user->hasPermission(Permission::ADMIN_MANAGE_ROLES);
     }
 
     /**
@@ -28,7 +29,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::ADMIN_MANAGE_ROLES);
     }
 
     /**
@@ -36,7 +37,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return true;
+        return $user->hasPermission(Permission::ADMIN_MANAGE_ROLES);
     }
 
     /**
@@ -48,7 +49,7 @@ class RolePolicy
             return false;
         }
 
-        return true;
+        return $user->hasPermission(Permission::ADMIN_DELETE_ROLES);
     }
 
     /**
@@ -56,7 +57,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        return true;
+        return $user->hasPermission(Permission::ADMIN_DELETE_ROLES);
     }
 
     /**
@@ -64,6 +65,10 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role): bool
     {
-        return true;
+        if ($role->key) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::ADMIN_DELETE_ROLES);
     }
 }

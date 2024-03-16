@@ -22,7 +22,7 @@ class PatientFactory extends Factory
             'lastname' => fake()->lastName(),
             'gender' => fake()->randomElement(['male', 'female']),
             'qid' => fake()->numberBetween(111111111, 999999999),
-            'password' => bcrypt(fake()->password),
+            'password' => bcrypt('password'),
             'birthday' => fake()->dateTimeBetween('-80 years', '-18 years'),
         ];
     }

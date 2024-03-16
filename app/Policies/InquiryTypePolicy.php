@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\InquiryType;
+use App\Models\Permission;
 use App\Models\User;
 
 class InquiryTypePolicy
@@ -12,7 +13,7 @@ class InquiryTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 
     /**
@@ -20,7 +21,7 @@ class InquiryTypePolicy
      */
     public function view(User $user, InquiryType $inquiryType): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 
     /**
@@ -28,7 +29,7 @@ class InquiryTypePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 
     /**
@@ -36,7 +37,7 @@ class InquiryTypePolicy
      */
     public function update(User $user, InquiryType $inquiryType): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 
     /**
@@ -48,7 +49,11 @@ class InquiryTypePolicy
             return false;
         }
 
-        return true;
+        if ($inquiryType->inquiries()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 
     /**
@@ -56,7 +61,7 @@ class InquiryTypePolicy
      */
     public function restore(User $user, InquiryType $inquiryType): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 
     /**
@@ -64,6 +69,14 @@ class InquiryTypePolicy
      */
     public function forceDelete(User $user, InquiryType $inquiryType): bool
     {
-        return true;
+        if ($inquiryType->key) {
+            return false;
+        }
+
+        if ($inquiryType->inquiries()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_TYPE);
     }
 }

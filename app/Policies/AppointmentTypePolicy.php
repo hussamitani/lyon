@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\AppointmentType;
+use App\Models\Permission;
 use App\Models\User;
 
 class AppointmentTypePolicy
@@ -12,7 +13,7 @@ class AppointmentTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 
     /**
@@ -20,7 +21,7 @@ class AppointmentTypePolicy
      */
     public function view(User $user, AppointmentType $appointmentType): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 
     /**
@@ -28,7 +29,7 @@ class AppointmentTypePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 
     /**
@@ -36,7 +37,7 @@ class AppointmentTypePolicy
      */
     public function update(User $user, AppointmentType $appointmentType): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 
     /**
@@ -48,7 +49,11 @@ class AppointmentTypePolicy
             return false;
         }
 
-        return true;
+        if ($appointmentType->appointments()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 
     /**
@@ -56,7 +61,7 @@ class AppointmentTypePolicy
      */
     public function restore(User $user, AppointmentType $appointmentType): bool
     {
-        return true;
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 
     /**
@@ -64,6 +69,14 @@ class AppointmentTypePolicy
      */
     public function forceDelete(User $user, AppointmentType $appointmentType): bool
     {
-        return true;
+        if ($appointmentType->key) {
+            return false;
+        }
+
+        if ($appointmentType->appointments()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
     }
 }

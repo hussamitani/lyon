@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\HasPermission;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -46,7 +48,7 @@ use Illuminate\Support\Carbon;
  *
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements HasAvatar
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasFactory, HasPermission, Notifiable;
 
@@ -97,5 +99,10 @@ class User extends Authenticatable implements HasAvatar
     public function getFilamentAvatarUrl(): ?string
     {
         return 'https://ui-avatars.com/api/?name='.str_replace(' ', '+', $this->name);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@pdms.com');
     }
 }
