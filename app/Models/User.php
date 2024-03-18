@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Concerns\HasPermission;
+use Exception;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -101,8 +102,42 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return 'https://ui-avatars.com/api/?name='.str_replace(' ', '+', $this->name);
     }
 
+    /**
+     * @throws Exception
+     */
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, '@pdms.com');
+        if (! str_ends_with($this->email, '@pdms.com')) {
+            return false;
+        }
+
+        if ($panel->getId() === 'system') {
+            return $this->canAccessSystemPanel();
+        }
+
+        if ($panel->getId() === 'admin') {
+            return $this->canAccessAdminPanel();
+        }
+
+        if ($panel->getId() === 'pdms') {
+            return $this->canAccessPdmsPanel();
+        }
+
+        return false;
+    }
+
+    public function canAccessPdmsPanel(): bool
+    {
+        return $this->hasAnyPermission(Permission::where('key', 'like', 'pdms%')->get()->pluck('key')->values()->toArray());
+    }
+
+    public function canAccessSystemPanel(): bool
+    {
+        return $this->hasAnyPermission(Permission::where('key', 'like', 'system%')->get()->pluck('key')->values()->toArray());
+    }
+
+    public function canAccessAdminPanel(): bool
+    {
+        return $this->hasAnyPermission(Permission::where('key', 'like', 'admin%')->get()->pluck('key')->values()->toArray());
     }
 }

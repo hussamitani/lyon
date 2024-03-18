@@ -25,6 +25,7 @@ class SystemPanelProvider extends PanelProvider
         return $panel
             ->id('system')
             ->path('system')
+            ->login(fn () => redirect()->route('filament.pdms.auth.login'))
             ->brandName('PDMS / System')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)

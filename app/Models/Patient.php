@@ -65,6 +65,8 @@ class Patient extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'qid',
         'password',
@@ -86,6 +88,16 @@ class Patient extends Authenticatable
             'birthday' => 'date',
             'password' => 'hashed',
         ];
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'qid';
+    }
+
+    public function getRouteKey(): string
+    {
+        return $this->qid;
     }
 
     /**

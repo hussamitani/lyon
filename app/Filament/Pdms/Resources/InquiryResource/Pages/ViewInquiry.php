@@ -67,8 +67,9 @@ class ViewInquiry extends ViewRecord
                         }),
                     Fieldset::make('Description')->schema([
                         TextEntry::make('description')
+                            ->columnSpanFull()
                             ->hiddenLabel()
-                            ->html(),
+                            ->markdown(),
                     ]),
                 ])
                     ->columns()

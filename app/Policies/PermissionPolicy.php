@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\Permission;
 use App\Models\User;
 
@@ -12,7 +13,7 @@ class PermissionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::ADMIN_VIEW_PERMISSIONS);
+        return $user->hasPermission(PermissionOption::ADMIN_PERMISSION_VIEW->value);
     }
 
     /**
@@ -20,7 +21,7 @@ class PermissionPolicy
      */
     public function view(User $user, Permission $permission): bool
     {
-        return $user->hasPermission(Permission::ADMIN_VIEW_PERMISSIONS);
+        return $user->hasPermission(PermissionOption::ADMIN_PERMISSION_VIEW->value);
     }
 
     /**
@@ -35,6 +36,14 @@ class PermissionPolicy
      * Determine whether the user can update the model.
      */
     public function update(User $user, Permission $permission): bool
+    {
+        return false;
+    }
+
+    /**
+     * Determine whether the user can delete any models.
+     */
+    public function deleteAny(User $user): bool
     {
         return false;
     }

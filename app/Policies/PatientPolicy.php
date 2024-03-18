@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\Patient;
-use App\Models\Permission;
 use App\Models\User;
 
 class PatientPolicy
@@ -13,7 +13,7 @@ class PatientPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_VIEW->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class PatientPolicy
      */
     public function view(User $user, Patient $patient): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_VIEW->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class PatientPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_CREATE->value);
     }
 
     /**
@@ -37,7 +37,15 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_UPDATE->value);
+    }
+
+    /**
+     * Determine whether the user can delete any models.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_DELETE->value);
     }
 
     /**
@@ -45,7 +53,7 @@ class PatientPolicy
      */
     public function delete(User $user, Patient $patient): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_DELETE->value);
     }
 
     /**
@@ -53,7 +61,15 @@ class PatientPolicy
      */
     public function restore(User $user, Patient $patient): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_FORCE_DELETE->value);
+    }
+
+    /**
+     * Determine whether the user can permanently delete any models.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_FORCE_DELETE->value);
     }
 
     /**
@@ -61,6 +77,6 @@ class PatientPolicy
      */
     public function forceDelete(User $user, Patient $patient): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_PATIENT);
+        return $user->hasPermission(PermissionOption::PDMS_PATIENT_FORCE_DELETE->value);
     }
 }

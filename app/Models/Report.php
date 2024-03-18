@@ -16,7 +16,8 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $patient_id
  * @property string $subject
- * @property string $description
+ * @property string $diagnosis
+ * @property string $treatment
  * @property array|null $files
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at

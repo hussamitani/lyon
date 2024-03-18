@@ -48,6 +48,7 @@ class Role extends Model
      */
     protected $withCount = [
         'permissions',
+        'users',
     ];
 
     /**

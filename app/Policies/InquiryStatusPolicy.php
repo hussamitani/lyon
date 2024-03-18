@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\InquiryStatus;
-use App\Models\Permission;
 use App\Models\User;
 
 class InquiryStatusPolicy
@@ -13,7 +13,7 @@ class InquiryStatusPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class InquiryStatusPolicy
      */
     public function view(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class InquiryStatusPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 
     /**
@@ -37,7 +37,7 @@ class InquiryStatusPolicy
      */
     public function update(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 
     /**
@@ -53,7 +53,7 @@ class InquiryStatusPolicy
             return false;
         }
 
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 
     /**
@@ -61,7 +61,7 @@ class InquiryStatusPolicy
      */
     public function restore(User $user, InquiryStatus $inquiryStatus): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 
     /**
@@ -77,6 +77,6 @@ class InquiryStatusPolicy
             return false;
         }
 
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_INQUIRY_STATUS);
+        return $user->hasPermission(PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value);
     }
 }

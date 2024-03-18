@@ -13,6 +13,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class ReportResource extends Resource
 {
@@ -37,8 +40,9 @@ class ReportResource extends Resource
                 Forms\Components\TextInput::make('subject')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('description')
-                    ->required()
+                Forms\Components\RichEditor::make('diagnosis')
+                    ->maxLength(255),
+                Forms\Components\RichEditor::make('treatment')
                     ->maxLength(255),
                 Forms\Components\FileUpload::make('files')
                     ->multiple()
@@ -72,16 +76,39 @@ class ReportResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make()
+                    ->visible(Auth::user()->can('forceDeleteAny', [self::$model])),
+                Tables\Filters\SelectFilter::make('patient')
+                    ->attribute('id')
+                    ->getOptionLabelFromRecordUsing(fn (Patient $record) => "$record->qid | {$record->firstname} {$record->lastname}")
+                    ->relationship('patient', 'qid')
+                    ->placeholder('QID')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                 ]),
             ]);
+    }
+
+    /**
+     * @return Builder<Report>
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->when(Auth::user()->can('deleteAny', [self::$model]), function (Builder $builder) {
+                return $builder->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]);
+            });
     }
 
     public static function getRelations(): array

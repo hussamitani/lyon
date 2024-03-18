@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Permission;
+use App\Enums\PermissionOption;
 use App\Models\Role;
 use App\Models\User;
 
@@ -13,7 +13,7 @@ class RolePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::ADMIN_VIEW_ROLES);
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_VIEW->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return $user->hasPermission(Permission::ADMIN_MANAGE_ROLES);
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_VIEW->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::ADMIN_MANAGE_ROLES);
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_CREATE->value);
     }
 
     /**
@@ -37,7 +37,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return $user->hasPermission(Permission::ADMIN_MANAGE_ROLES);
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_UPDATE->value);
     }
 
     /**
@@ -49,7 +49,11 @@ class RolePolicy
             return false;
         }
 
-        return $user->hasPermission(Permission::ADMIN_DELETE_ROLES);
+        if ($role->users()->count()) {
+            return false;
+        }
+
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_DELETE->value);
     }
 
     /**
@@ -57,7 +61,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        return $user->hasPermission(Permission::ADMIN_DELETE_ROLES);
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_DELETE->value);
     }
 
     /**
@@ -69,6 +73,6 @@ class RolePolicy
             return false;
         }
 
-        return $user->hasPermission(Permission::ADMIN_DELETE_ROLES);
+        return $user->hasPermission(PermissionOption::ADMIN_ROLE_DELETE->value);
     }
 }

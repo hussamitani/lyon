@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\Inquiry;
-use App\Models\Permission;
 use App\Models\User;
 
 class InquiryPolicy
@@ -13,7 +13,7 @@ class InquiryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_INQUIRY);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_VIEW->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class InquiryPolicy
      */
     public function view(User $user, Inquiry $inquiry): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_INQUIRY);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_VIEW->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class InquiryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_INQUIRY);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_CREATE->value);
     }
 
     /**
@@ -37,7 +37,15 @@ class InquiryPolicy
      */
     public function update(User $user, Inquiry $inquiry): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_INQUIRY);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_UPDATE->value);
+    }
+
+    /**
+     * Determine whether the user can delete any models.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_DELETE->value);
     }
 
     /**
@@ -45,7 +53,7 @@ class InquiryPolicy
      */
     public function delete(User $user, Inquiry $inquiry): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_DELETE->value);
     }
 
     /**
@@ -53,7 +61,15 @@ class InquiryPolicy
      */
     public function restore(User $user, Inquiry $inquiry): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_FORCE_DELETE->value);
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_FORCE_DELETE->value);
     }
 
     /**
@@ -61,6 +77,10 @@ class InquiryPolicy
      */
     public function forceDelete(User $user, Inquiry $inquiry): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY);
+        if (! $inquiry->deleted_at) {
+            return false;
+        }
+
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_FORCE_DELETE->value);
     }
 }

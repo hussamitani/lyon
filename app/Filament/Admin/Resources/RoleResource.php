@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\RoleResource\Pages;
+use App\Filament\Admin\Resources\RoleResource\RelationManagers\UsersRelationManager;
 use App\Models\Permission;
 use App\Models\Role;
 use Filament\Forms;
@@ -21,6 +22,10 @@ class RoleResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $pdmsPermissions = Permission::where('key', 'LIKE', 'pdms_%')->get();
+        $adminPermissions = Permission::where('key', 'LIKE', 'admin_%')->get();
+        $systemPermissions = Permission::where('key', 'LIKE', 'system_%')->get();
+
         return $form
             ->schema([
                 Forms\Components\Section::make('Role')->schema([
@@ -30,13 +35,29 @@ class RoleResource extends Resource
                     Forms\Components\Textarea::make('description')
                         ->maxLength(255),
                 ])->columns(1),
-                Forms\Components\Section::make('Permissions')->schema([
+                Forms\Components\Section::make('PDMS Permissions')->schema([
                     Forms\Components\CheckboxList::make('permissions')
                         ->hiddenLabel()
                         ->relationship('permissions', 'permissions')
                         ->columns(3)
-                        ->options(Permission::all()->pluck('name', 'id'))
-                        ->descriptions(Permission::all()->pluck('description', 'id')),
+                        ->options($pdmsPermissions->pluck('name', 'id'))
+                        ->descriptions($pdmsPermissions->pluck('description', 'id')),
+                ])->columns(1),
+                Forms\Components\Section::make('System Settings Permissions')->schema([
+                    Forms\Components\CheckboxList::make('permissions')
+                        ->hiddenLabel()
+                        ->relationship('permissions', 'permissions')
+                        ->columns(3)
+                        ->options($systemPermissions->pluck('name', 'id'))
+                        ->descriptions($systemPermissions->pluck('description', 'id')),
+                ])->columns(1),
+                Forms\Components\Section::make('Administrative Permissions')->schema([
+                    Forms\Components\CheckboxList::make('permissions')
+                        ->hiddenLabel()
+                        ->relationship('permissions', 'permissions')
+                        ->columns(3)
+                        ->options($adminPermissions->pluck('name', 'id'))
+                        ->descriptions($adminPermissions->pluck('description', 'id')),
                 ])->columns(1),
             ])->columns(2);
     }
@@ -57,6 +78,8 @@ class RoleResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('users_count')
+                    ->alignEnd(),
                 Tables\Columns\TextColumn::make('permissions_count')
                     ->alignEnd(),
             ])
@@ -64,7 +87,9 @@ class RoleResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
             ]);
@@ -73,6 +98,7 @@ class RoleResource extends Resource
     public static function getRelations(): array
     {
         return [
+            UsersRelationManager::class,
         ];
     }
 
