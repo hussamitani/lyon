@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -67,6 +68,12 @@ class Appointment extends Model
     {
         parent::booted();
 
+        self::onDelete(function (Appointment $appointment) {
+            Auth::check() && $appointment->deleted_by_id = (int) Auth::id();
+
+            $appointment->saveQuietly();
+        });
+
         self::observe(AppointmentObserver::class);
     }
 
@@ -102,6 +109,8 @@ class Appointment extends Model
      */
     public function versions(): HasMany
     {
-        return $this->hasMany(AppointmentVersion::class);
+        return $this->hasMany(AppointmentVersion::class)
+            ->whereNot('updated_at', $this->updated_at)
+            ->orderBy('created_at');
     }
 }

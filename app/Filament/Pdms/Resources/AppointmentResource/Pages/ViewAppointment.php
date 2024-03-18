@@ -5,7 +5,10 @@ namespace App\Filament\Pdms\Resources\AppointmentResource\Pages;
 use App\Concerns\HasInfoListDataSection;
 use App\Filament\Pdms\Resources\AppointmentResource;
 use App\Models\Appointment;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\RestoreAction;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\Section;
@@ -27,6 +30,9 @@ class ViewAppointment extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            DeleteAction::make(),
+            ForceDeleteAction::make(),
+            RestoreAction::make(),
             EditAction::make(),
         ];
     }
@@ -46,6 +52,7 @@ class ViewAppointment extends ViewRecord
                         ->label('QID'),
                     TextEntry::make('type.name')
                         ->badge()
+                        ->tooltip(fn () => $this->record->type->description)
                         ->color('info'),
                     TextEntry::make('begins_at')
                         ->dateTime('d.m.Y H:i'),
@@ -53,12 +60,15 @@ class ViewAppointment extends ViewRecord
                         ->dateTime('d.m.Y H:i'),
                     Fieldset::make('Location')->schema([
                         TextEntry::make('location')
+                            ->columnSpanFull()
+                            ->markdown()
                             ->hiddenLabel(),
                     ]),
                     Fieldset::make('Description')->schema([
                         TextEntry::make('description')
+                            ->columnSpanFull()
                             ->hiddenLabel()
-                            ->html(),
+                            ->markdown(),
                     ]),
                 ])
                     ->columns(3)
@@ -67,11 +77,18 @@ class ViewAppointment extends ViewRecord
                 Tabs::make('Data')->columns(2)->schema([
                     $this->getInfolistAuthorTab(),
                     $this->getInfolistVersionsTab([
-                        TextEntry::make('subject')->columnSpan(2),
-                        TextEntry::make('description')->columnSpan(2),
-                        TextEntry::make('location')->columnSpan(2),
-                        TextEntry::make('begins_at')->columnSpan(1)->dateTime('d.m.Y H:i'),
-                        TextEntry::make('ends_at')->columnSpan(1)->dateTime('d.m.Y H:i'),
+                        TextEntry::make('subject')
+                            ->columnSpan(2),
+                        TextEntry::make('description')
+                            ->columnSpan(2),
+                        TextEntry::make('location')
+                            ->columnSpan(2),
+                        TextEntry::make('begins_at')
+                            ->columnSpan(1)
+                            ->dateTime('d.m.Y H:i'),
+                        TextEntry::make('ends_at')
+                            ->columnSpan(1)
+                            ->dateTime('d.m.Y H:i'),
                     ]),
                 ])->columnSpan(1),
             ]),

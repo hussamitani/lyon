@@ -16,9 +16,13 @@ class ReportFactory extends Factory
 
     public function definition(): array
     {
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \DavidBadura\FakerMarkdownGenerator\FakerProvider($faker));
+
         return [
             'subject' => fake()->realText(25),
-            'description' => fake()->realText(),
+            'diagnosis' => $faker->markdown(),
+            'treatment' => $faker->markdown(),
         ];
     }
 

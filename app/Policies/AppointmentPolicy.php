@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\Appointment;
-use App\Models\Permission;
 use App\Models\User;
 
 class AppointmentPolicy
@@ -13,7 +13,7 @@ class AppointmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_APPOINTMENT);
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_VIEW->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class AppointmentPolicy
      */
     public function view(User $user, Appointment $appointment): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_APPOINTMENT);
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_VIEW->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class AppointmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_APPOINTMENT);
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_CREATE->value);
     }
 
     /**
@@ -37,7 +37,19 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_APPOINTMENT);
+        if ($appointment->deleted_at) {
+            return false;
+        }
+
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_UPDATE->value);
+    }
+
+    /**
+     * Determine whether the user can delete models.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_DELETE->value);
     }
 
     /**
@@ -45,7 +57,7 @@ class AppointmentPolicy
      */
     public function delete(User $user, Appointment $appointment): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_APPOINTMENT);
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_DELETE->value);
     }
 
     /**
@@ -53,7 +65,15 @@ class AppointmentPolicy
      */
     public function restore(User $user, Appointment $appointment): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_APPOINTMENT);
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_FORCE_DELETE->value);
+    }
+
+    /**
+     * Determine whether the user can permanently delete any models.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_FORCE_DELETE->value);
     }
 
     /**
@@ -61,6 +81,10 @@ class AppointmentPolicy
      */
     public function forceDelete(User $user, Appointment $appointment): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_APPOINTMENT);
+        if (! $appointment->deleted_at) {
+            return false;
+        }
+
+        return $user->hasPermission(PermissionOption::PDMS_APPOINTMENT_FORCE_DELETE->value);
     }
 }

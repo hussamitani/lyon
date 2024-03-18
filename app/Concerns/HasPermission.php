@@ -13,4 +13,24 @@ trait HasPermission
             ->contains($permission) ||
         $this->permissions->pluck('key')->contains($permission);
     }
+
+    /**
+     * @param array<string> $permissions
+     * @return bool
+     */
+    public function hasAnyPermission(array $permissions): bool
+    {
+        $userPermissions = $this->roles
+            ->pluck('permissions')
+            ->flatten()
+            ->pluck('key')->merge($this->permissions->pluck('key'))->unique();
+
+        foreach ($permissions as $permission) {
+            if ($userPermissions->contains($permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\InquiryResponse;
-use App\Models\Permission;
 use App\Models\User;
 
 class InquiryResponsePolicy
@@ -13,7 +13,7 @@ class InquiryResponsePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_INQUIRY_RESPONSE);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_VIEW->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class InquiryResponsePolicy
      */
     public function view(User $user, InquiryResponse $inquiryResponse): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_INQUIRY_RESPONSE);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_VIEW->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class InquiryResponsePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_INQUIRY_RESPONSE);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_CREATE->value);
     }
 
     /**
@@ -37,7 +37,7 @@ class InquiryResponsePolicy
      */
     public function update(User $user, InquiryResponse $inquiryResponse): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_INQUIRY_RESPONSE);
+        return $inquiryResponse->createdBy->is($user) && $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_CREATE->value);
     }
 
     /**
@@ -45,7 +45,11 @@ class InquiryResponsePolicy
      */
     public function delete(User $user, InquiryResponse $inquiryResponse): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY_RESPONSE);
+        if ($user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_FORCE_DELETE->value)) {
+            return true;
+        }
+
+        return $inquiryResponse->createdBy->is($user) && $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_CREATE->value);
     }
 
     /**
@@ -53,7 +57,7 @@ class InquiryResponsePolicy
      */
     public function restore(User $user, InquiryResponse $inquiryResponse): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY_RESPONSE);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_FORCE_DELETE->value);
     }
 
     /**
@@ -61,6 +65,6 @@ class InquiryResponsePolicy
      */
     public function forceDelete(User $user, InquiryResponse $inquiryResponse): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_INQUIRY_RESPONSE);
+        return $user->hasPermission(PermissionOption::PDMS_INQUIRY_RESPONSE_FORCE_DELETE->value);
     }
 }

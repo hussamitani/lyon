@@ -15,6 +15,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class InquiryResource extends Resource
 {
@@ -109,11 +112,21 @@ class InquiryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make()
+                    ->visible(Auth::user()->can('forceDeleteAny', [self::$model])),
+                Tables\Filters\SelectFilter::make('patient')
+                    ->attribute('id')
+                    ->getOptionLabelFromRecordUsing(fn (Patient $record) => "$record->qid | {$record->firstname} {$record->lastname}")
+                    ->relationship('patient', 'qid')
+                    ->placeholder('QID')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -126,6 +139,19 @@ class InquiryResource extends Resource
         return [
             ResponsesRelationManager::class,
         ];
+    }
+
+    /**
+     * @return Builder<Inquiry>
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->when(Auth::user()->can('deleteAny', [self::$model]), function (Builder $builder) {
+                return $builder->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]);
+            });
     }
 
     public static function getPages(): array

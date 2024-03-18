@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionOption;
 use App\Models\AppointmentType;
-use App\Models\Permission;
 use App\Models\User;
 
 class AppointmentTypePolicy
@@ -13,7 +13,7 @@ class AppointmentTypePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class AppointmentTypePolicy
      */
     public function view(User $user, AppointmentType $appointmentType): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class AppointmentTypePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 
     /**
@@ -37,7 +37,7 @@ class AppointmentTypePolicy
      */
     public function update(User $user, AppointmentType $appointmentType): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 
     /**
@@ -53,7 +53,7 @@ class AppointmentTypePolicy
             return false;
         }
 
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 
     /**
@@ -61,7 +61,7 @@ class AppointmentTypePolicy
      */
     public function restore(User $user, AppointmentType $appointmentType): bool
     {
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 
     /**
@@ -77,6 +77,6 @@ class AppointmentTypePolicy
             return false;
         }
 
-        return $user->hasPermission(Permission::SYSTEM_MANAGE_APPOINTMENT_TYPE);
+        return $user->hasPermission(PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value);
     }
 }

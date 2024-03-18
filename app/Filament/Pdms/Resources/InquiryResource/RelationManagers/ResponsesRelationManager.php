@@ -63,7 +63,7 @@ class ResponsesRelationManager extends RelationManager
                         }),
                     Tables\Columns\TextColumn::make('message')
                         ->columnSpan(11)
-                        ->html(),
+                        ->markdown(),
                 ])->columnSpan(11),
             ])
             ->filters([

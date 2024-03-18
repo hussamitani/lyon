@@ -20,6 +20,8 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class PdmsPanelProvider extends PanelProvider
 {
+    public const PanelColor = Color::Amber;
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -33,7 +35,7 @@ class PdmsPanelProvider extends PanelProvider
             ->maxContentWidth(MaxWidth::Full)
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => self::PanelColor,
             ])
             ->discoverResources(in: app_path('Filament/Pdms/Resources'), for: 'App\\Filament\\Pdms\\Resources')
             ->discoverPages(in: app_path('Filament/Pdms/Pages'), for: 'App\\Filament\\Pdms\\Pages')

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->foreignId('report_id')->constrained()->references('id')->on('reports')->onDelete('cascade');
             $table->foreignId('patient_id')->constrained()->references('id')->on('patients')->onDelete('cascade');
             $table->string('subject');
-            $table->string('description');
+            $table->string('diagnosis')->nullable();
+            $table->string('treatment')->nullable();
             $table->text('files')->nullable();
 
             $table->unsignedBigInteger('created_by_id')->nullable();

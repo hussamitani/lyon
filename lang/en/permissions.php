@@ -1,107 +1,145 @@
 <?php
 
+use App\Enums\PermissionOption;
+
 return [
-    'pdms_view_patient' => [
+    PermissionOption::PDMS_PATIENT_VIEW->value => [
         'name' => 'PDMS | View patients',
         'description' => 'Allows the user to view patient records in the PDMS.',
     ],
-    'pdms_create_patient' => [
+    PermissionOption::PDMS_PATIENT_CREATE->value => [
         'name' => 'PDMS | Create patients',
         'description' => 'Allows the user to create new patient records in the PDMS.',
     ],
-    'pdms_manage_patient' => [
-        'name' => 'PDMS | Manage patient information',
-        'description' => 'Allows the user to manage (edit, update) patient information in the PDMS.',
+    PermissionOption::PDMS_PATIENT_UPDATE->value => [
+        'name' => 'PDMS | Update patients',
+        'description' => 'Allows the user to update patient data from the PDMS.',
     ],
-    'pdms_delete_patient' => [
+    PermissionOption::PDMS_PATIENT_DELETE->value => [
         'name' => 'PDMS | Delete patients',
         'description' => 'Allows the user to delete patient records from the PDMS.',
     ],
-    'pdms_view_appointment' => [
+    PermissionOption::PDMS_PATIENT_FORCE_DELETE->value => [
+        'name' => 'PDMS | Force Delete patients',
+        'description' => 'Allows the user to permanently delete patient records from the PDMS.',
+    ],
+    PermissionOption::PDMS_APPOINTMENT_VIEW->value => [
         'name' => 'PDMS | View appointments',
         'description' => 'Allows the user to view appointment schedules in the PDMS.',
     ],
-    'pdms_manage_appointment' => [
-        'name' => 'PDMS | Manage appointments',
-        'description' => 'Allows the user to manage appointment schedules in the PDMS (edit, reschedule, etc.).',
+    PermissionOption::PDMS_APPOINTMENT_CREATE->value => [
+        'name' => 'PDMS | Create appointments',
+        'description' => 'Allows the user to create appointment schedules in the PDMS (edit, reschedule, etc.).',
     ],
-    'pdms_delete_appointment' => [
+    PermissionOption::PDMS_APPOINTMENT_UPDATE->value => [
+        'name' => 'PDMS | Update appointments',
+        'description' => 'Allows the user to update appointment schedules in the PDMS (edit, reschedule, etc.).',
+    ],
+    PermissionOption::PDMS_APPOINTMENT_DELETE->value => [
         'name' => 'PDMS | Delete appointments',
         'description' => 'Allows the user to delete appointment schedules from the PDMS.',
     ],
-    'pdms_view_inquiry' => [
+    PermissionOption::PDMS_APPOINTMENT_FORCE_DELETE->value => [
+        'name' => 'PDMS | Force Delete appointments',
+        'description' => 'Allows the user to permanently delete appointment schedules from the PDMS.',
+    ],
+    PermissionOption::PDMS_INQUIRY_VIEW->value => [
         'name' => 'PDMS | View inquiries',
-        'description' => 'Allows the user to view patient inquiries in the PDMS.',
+        'description' => 'Allows the user to view inquiries in the PDMS.',
     ],
-    'pdms_manage_inquiry' => [
-        'name' => 'PDMS | Manage inquiries',
-        'description' => 'Allows the user to manage patient inquiries in the PDMS (respond, update status, etc.).',
+    PermissionOption::PDMS_INQUIRY_CREATE->value => [
+        'name' => 'PDMS | Create inquiries',
+        'description' => 'Allows the user to create inquiries in the PDMS.',
     ],
-    'pdms_delete_inquiry' => [
+    PermissionOption::PDMS_INQUIRY_UPDATE->value => [
+        'name' => 'PDMS | Update inquiries',
+        'description' => 'Allows the user to update patient inquiries in the PDMS.',
+    ],
+    PermissionOption::PDMS_INQUIRY_DELETE->value => [
         'name' => 'PDMS | Delete inquiries',
         'description' => 'Allows the user to delete patient inquiries from the PDMS.',
     ],
-    'pdms_view_inquiry_response' => [
-        'name' => 'PDMS | View inquiry-responses',
-        'description' => 'Allows the user to view responses to patient inquiries in the PDMS.',
+    PermissionOption::PDMS_INQUIRY_FORCE_DELETE->value => [
+        'name' => 'PDMS | Force Delete inquiries',
+        'description' => 'Allows the user to permanently delete patient inquiries from the PDMS.',
     ],
-    'pdms_manage_inquiry_response' => [
+    PermissionOption::PDMS_INQUIRY_RESPONSE_VIEW->value => [
+        'name' => 'PDMS | View responses to inquiries',
+        'description' => 'Allows the user to view responses of patient inquiries in the PDMS.',
+    ],
+    PermissionOption::PDMS_INQUIRY_RESPONSE_CREATE->value => [
         'name' => 'PDMS | Respond to inquiries',
         'description' => 'Allows the user to respond to patient inquiries in the PDMS.',
     ],
-    'pdms_delete_inquiry_response' => [
-        'name' => 'PDMS | Delete inquiry-responses',
-        'description' => 'Allows the user to delete responses to patient inquiries from the PDMS.',
+    PermissionOption::PDMS_INQUIRY_RESPONSE_FORCE_DELETE->value => [
+        'name' => 'PDMS | Force Delete Inquiry Responses',
+        'description' => 'Allows the user to delete and permanently delete responses of patient inquiries in the PDMS.',
     ],
-    'pdms_view_report' => [
+    PermissionOption::PDMS_REPORT_VIEW->value => [
         'name' => 'PDMS | View reports',
         'description' => 'Allows the user to view reports generated in the PDMS.',
     ],
-    'pdms_manage_report' => [
-        'name' => 'PDMS | Manage report',
-        'description' => 'Allows the user to manage reports generated in the PDMS (edit, delete, etc.).',
+    PermissionOption::PDMS_REPORT_CREATE->value => [
+        'name' => 'PDMS | Update report',
+        'description' => 'Allows the user to update reports generated in the PDMS.',
     ],
-    'pdms_delete_report' => [
+    PermissionOption::PDMS_REPORT_UPDATE->value => [
+        'name' => 'PDMS | Update report',
+        'description' => 'Allows the user to update reports generated in the PDMS.',
+    ],
+    PermissionOption::PDMS_REPORT_DELETE->value => [
         'name' => 'PDMS | Delete report',
         'description' => 'Allows the user to delete reports generated in the PDMS.',
     ],
-    'system_manage_appointment_type' => [
+    PermissionOption::PDMS_REPORT_FORCE_DELETE->value => [
+        'name' => 'PDMS | Force Delete report',
+        'description' => 'Allows the user to permanently delete reports generated in the PDMS.',
+    ],
+    PermissionOption::SYSTEM_APPOINTMENT_TYPE_MANAGE->value => [
         'name' => 'System | Manage appointment-types',
-        'description' => 'Allows the user to manage appointment types in the system (add, edit, delete, etc.).',
+        'description' => 'Allows the user to update appointment types in the system.',
     ],
-    'system_manage_inquiry_type' => [
+    PermissionOption::SYSTEM_INQUIRY_TYPE_MANAGE->value => [
         'name' => 'System | Manage inquiry-types',
-        'description' => 'Allows the user to manage inquiry types in the system (add, edit, delete, etc.).',
+        'description' => 'Allows the user to update inquiry types in the system.',
     ],
-    'system_manage_inquiry_status' => [
-        'name' => 'System | Manage inquiry-response-statuses',
-        'description' => 'Allows the user to manage inquiry response statuses in the system (add, edit, delete, etc.).',
+    PermissionOption::SYSTEM_INQUIRY_STATUS_MANAGE->value => [
+        'name' => 'System | Manage inquiry-response status-types',
+        'description' => 'Allows the user to update inquiry response statuses in the system.',
     ],
-    'admin_view_users' => [
+    PermissionOption::ADMIN_USER_VIEW->value => [
         'name' => 'Admin | View users',
         'description' => 'Allows the user to view user accounts in the admin panel.',
     ],
-    'admin_manage_users' => [
-        'name' => 'Admin | Manage users',
-        'description' => 'Allows the user to manage user accounts in the admin panel (edit, delete, etc.).',
+    PermissionOption::ADMIN_USER_CREATE->value => [
+        'name' => 'Admin | Create users',
+        'description' => 'Allows the user to view user accounts in the admin panel.',
     ],
-    'admin_delete_users' => [
+    PermissionOption::ADMIN_USER_UPDATE->value => [
+        'name' => 'Admin | Update users',
+        'description' => 'Allows the user to update user accounts in the admin panel.',
+    ],
+    PermissionOption::ADMIN_USER_DELETE->value => [
         'name' => 'Admin | Delete users',
         'description' => 'Allows the user to delete user accounts from the admin panel.',
     ],
-    'admin_view_roles' => [
+    PermissionOption::ADMIN_ROLE_VIEW->value => [
         'name' => 'Admin | View roles',
         'description' => 'Allows the user to view roles defined in the system in the admin panel.',
     ],
-    'admin_manage_roles' => [
-        'name' => 'Admin | Manage roles',
-        'description' => 'Allows the user to manage roles defined in the system in the admin panel (edit, delete, etc.).',
+    PermissionOption::ADMIN_ROLE_CREATE->value => [
+        'name' => 'Admin | Create roles',
+        'description' => 'Allows the user to create roles in the system in the admin panel.',
     ],
-    'admin_delete_roles' => [
+    PermissionOption::ADMIN_ROLE_UPDATE->value => [
+        'name' => 'Admin | Update roles',
+        'description' => 'Allows the user to update roles defined in the system in the admin panel.',
+    ],
+    PermissionOption::ADMIN_ROLE_DELETE->value => [
         'name' => 'Admin | Delete roles',
         'description' => 'Allows the user to delete roles defined in the system from the admin panel.',
     ],
-    'admin_view_permissions' => [
+    PermissionOption::ADMIN_PERMISSION_VIEW->value => [
         'name' => 'Admin | View permissions',
         'description' => 'Allows the user to view permissions assigned to roles in the admin panel.',
     ],

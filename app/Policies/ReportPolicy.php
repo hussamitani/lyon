@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Permission;
+use App\Enums\PermissionOption;
 use App\Models\Report;
 use App\Models\User;
 
@@ -13,7 +13,7 @@ class ReportPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_VIEW->value);
     }
 
     /**
@@ -21,7 +21,7 @@ class ReportPolicy
      */
     public function view(User $user, Report $report): bool
     {
-        return $user->hasPermission(Permission::PDMS_VIEW_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_VIEW->value);
     }
 
     /**
@@ -29,7 +29,7 @@ class ReportPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_CREATE->value);
     }
 
     /**
@@ -37,7 +37,15 @@ class ReportPolicy
      */
     public function update(User $user, Report $report): bool
     {
-        return $user->hasPermission(Permission::PDMS_MANAGE_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_UPDATE->value);
+    }
+
+    /**
+     * Determine whether the user can delete any models.
+     */
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_DELETE->value);
     }
 
     /**
@@ -45,7 +53,7 @@ class ReportPolicy
      */
     public function delete(User $user, Report $report): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_DELETE->value);
     }
 
     /**
@@ -53,7 +61,15 @@ class ReportPolicy
      */
     public function restore(User $user, Report $report): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_FORCE_DELETE->value);
+    }
+
+    /**
+     * Determine whether the user can permanently delete any models.
+     */
+    public function forceDeleteAny(User $user): bool
+    {
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_FORCE_DELETE->value);
     }
 
     /**
@@ -61,6 +77,6 @@ class ReportPolicy
      */
     public function forceDelete(User $user, Report $report): bool
     {
-        return $user->hasPermission(Permission::PDMS_DELETE_REPORT);
+        return $user->hasPermission(PermissionOption::PDMS_REPORT_FORCE_DELETE->value);
     }
 }
