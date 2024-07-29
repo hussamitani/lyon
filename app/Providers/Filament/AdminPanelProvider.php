@@ -25,8 +25,8 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->id('admin')
             ->path('admin')
-            ->login(fn () => redirect()->route('filament.pdms.auth.login'))
-            ->brandName('PDMS / Admin')
+            ->login(fn () => redirect()->route('filament.pim.auth.login'))
+            ->brandName('PIM / Admin')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->colors([

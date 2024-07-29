@@ -22,7 +22,7 @@ class RoleResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $pdmsPermissions = Permission::where('key', 'LIKE', 'pdms_%')->get();
+        $pimPermissions = Permission::where('key', 'LIKE', 'pim_%')->get();
         $adminPermissions = Permission::where('key', 'LIKE', 'admin_%')->get();
         $systemPermissions = Permission::where('key', 'LIKE', 'system_%')->get();
 
@@ -35,13 +35,13 @@ class RoleResource extends Resource
                     Forms\Components\Textarea::make('description')
                         ->maxLength(255),
                 ])->columns(1),
-                Forms\Components\Section::make('PDMS Permissions')->schema([
+                Forms\Components\Section::make('PIM Permissions')->schema([
                     Forms\Components\CheckboxList::make('permissions')
                         ->hiddenLabel()
                         ->relationship('permissions', 'permissions')
                         ->columns(3)
-                        ->options($pdmsPermissions->pluck('name', 'id'))
-                        ->descriptions($pdmsPermissions->pluck('description', 'id')),
+                        ->options($pimPermissions->pluck('name', 'id'))
+                        ->descriptions($pimPermissions->pluck('description', 'id')),
                 ])->columns(1),
                 Forms\Components\Section::make('System Settings Permissions')->schema([
                     Forms\Components\CheckboxList::make('permissions')

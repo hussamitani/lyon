@@ -1,5 +1,5 @@
 services:
-    pdms:
+    pim:
         build:
             context: ./vendor/laravel/sail/runtimes/8.3
             dockerfile: Dockerfile
@@ -11,9 +11,9 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.docker.network=proxy"
-            - "traefik.http.routers.pdms.rule=Host(`pdms.app`)"
-            - "traefik.http.routers.pdms.tls=true"
-            - "traefik.http.services.pdms.loadbalancer.server.port=80"
+            - "traefik.http.routers.pim.rule=Host(`pim.docker.localhost`)"
+            - "traefik.http.routers.pim.tls=true"
+            - "traefik.http.services.pim.loadbalancer.server.port=80"
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
@@ -25,8 +25,35 @@ services:
         networks:
             - sail
             - proxy
+    database:
+        image: 'mysql/mysql-server:8.0'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: '%'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - 'sail-mysql:/var/lib/mysql'
+            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - '-p${DB_PASSWORD}'
+            retries: 3
+            timeout: 5s
 networks:
     sail:
         driver: bridge
     proxy:
         external: true
+volumes:
+    sail-mysql:
+        driver: local

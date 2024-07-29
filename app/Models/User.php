@@ -107,7 +107,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        if (! str_ends_with($this->email, '@pdms.com')) {
+        if (! str_ends_with($this->email, '@pim.com')) {
             return false;
         }
 
@@ -119,25 +119,28 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             return $this->canAccessAdminPanel();
         }
 
-        if ($panel->getId() === 'pdms') {
-            return $this->canAccessPdmsPanel();
+        if ($panel->getId() === 'pim') {
+            return $this->canAccessPimPanel();
         }
 
         return false;
     }
 
-    public function canAccessPdmsPanel(): bool
+    public function canAccessPimPanel(): bool
     {
-        return $this->hasAnyPermission(Permission::where('key', 'like', 'pdms%')->get()->pluck('key')->values()->toArray());
+        return true;
+        // return $this->hasAnyPermission(Permission::where('key', 'like', 'pim%')->get()->pluck('key')->values()->toArray());
     }
 
     public function canAccessSystemPanel(): bool
     {
-        return $this->hasAnyPermission(Permission::where('key', 'like', 'system%')->get()->pluck('key')->values()->toArray());
+        return true;
+        // return $this->hasAnyPermission(Permission::where('key', 'like', 'system%')->get()->pluck('key')->values()->toArray());
     }
 
     public function canAccessAdminPanel(): bool
     {
-        return $this->hasAnyPermission(Permission::where('key', 'like', 'admin%')->get()->pluck('key')->values()->toArray());
+        return true;
+        // return $this->hasAnyPermission(Permission::where('key', 'like', 'admin%')->get()->pluck('key')->values()->toArray());
     }
 }

@@ -14,10 +14,10 @@ class FilamentPanelHelper
     {
         return [
             MenuItem::make()
-                ->visible(fn () => Auth::check() && Auth::user()->canAccessPdmsPanel())
-                ->label(trans('navigation.pdms'))
+                ->visible(fn () => Auth::check() && Auth::user()->canAccessPimPanel())
+                ->label(trans('navigation.pim'))
                 ->icon('heroicon-o-wallet')
-                ->url('/pdms')
+                ->url('/pim')
                 ->sort(0),
             MenuItem::make()
                 ->visible(fn () => Auth::check() && Auth::user()->canAccessAdminPanel())

@@ -18,7 +18,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class PdmsPanelProvider extends PanelProvider
+class PimPanelProvider extends PanelProvider
 {
     public const PanelColor = Color::Amber;
 
@@ -26,10 +26,9 @@ class PdmsPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('pdms')
-            ->path('pdms')
-            ->brandName('PDMS / App')
-            ->brandLogo(asset('images/Qatar_Logo.png'))
+            ->id('pim')
+            ->path('pim')
+            ->brandName('PIM / App')
             ->brandLogoHeight('58px')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
@@ -37,11 +36,11 @@ class PdmsPanelProvider extends PanelProvider
             ->colors([
                 'primary' => self::PanelColor,
             ])
-            ->discoverResources(in: app_path('Filament/Pdms/Resources'), for: 'App\\Filament\\Pdms\\Resources')
-            ->discoverPages(in: app_path('Filament/Pdms/Pages'), for: 'App\\Filament\\Pdms\\Pages')
+            ->discoverResources(in: app_path('Filament/Pim/Resources'), for: 'App\\Filament\\Pim\\Resources')
+            ->discoverPages(in: app_path('Filament/Pim/Pages'), for: 'App\\Filament\\Pim\\Pages')
             ->pages([
             ])
-            ->discoverWidgets(in: app_path('Filament/Pdms/Widgets'), for: 'App\\Filament\\Pdms\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Pim/Widgets'), for: 'App\\Filament\\Pim\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,

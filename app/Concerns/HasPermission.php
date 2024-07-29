@@ -15,8 +15,7 @@ trait HasPermission
     }
 
     /**
-     * @param array<string> $permissions
-     * @return bool
+     * @param  array<string>  $permissions
      */
     public function hasAnyPermission(array $permissions): bool
     {

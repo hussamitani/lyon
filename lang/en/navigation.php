@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'pdms' => 'PDMS',
+    'pim' => 'PIM',
     'admin' => 'Administration',
     'system' => 'System Setting',
 ];
