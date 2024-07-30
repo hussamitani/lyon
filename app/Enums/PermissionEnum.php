@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PermissionOption: string
+enum PermissionEnum: string
 {
     case ADMIN_USER_VIEW = 'admin_user_view';
     case ADMIN_USER_CREATE = 'admin_user_create';

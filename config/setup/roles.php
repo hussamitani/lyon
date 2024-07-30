@@ -5,7 +5,7 @@ return [
         'name' => 'Administrator',
         'description' => 'The Administrator has by default all available permissions.',
         'permissions' => [
-            ...\App\Enums\PermissionOption::cases(),
+            ...\App\Enums\PermissionEnum::cases(),
         ],
     ],
 ];

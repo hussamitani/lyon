@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Setup;
 
-use App\Enums\PermissionOption;
+use App\Enums\PermissionEnum;
 use App\Models\Permission;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -27,6 +27,6 @@ class CreatePermissionsJob implements ShouldQueue
      */
     public function handle(): void
     {
-        collect(PermissionOption::cases())->each(fn (PermissionOption $option) => Permission::firstOrCreate(['key' => $option->value]));
+        collect(PermissionEnum::cases())->each(fn (PermissionEnum $option) => Permission::firstOrCreate(['key' => $option->value]));
     }
 }
