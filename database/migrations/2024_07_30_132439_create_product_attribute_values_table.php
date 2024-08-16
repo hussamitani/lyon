@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_field_values', function (Blueprint $table) {
+        Schema::create('product_attribute_values', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->foreignId('field_id')->constrained('product_fields')->cascadeOnDelete();
-            $table->json('field_value')->nullable(false);
+            $table->foreignId('family_id')->constrained('families')->cascadeOnDelete();
+            $table->foreignId('attribute_id')->constrained('attributes')->cascadeOnDelete();
+            $table->json('attribute_value')->nullable(false);
 
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_field_values');
+        Schema::dropIfExists('product_attribute_values');
     }
 };

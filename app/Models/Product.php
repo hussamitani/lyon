@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $family_id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Family $family
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProductField> $fields
- * @property-read int|null $fields_count
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Family $family
+ * @property-read Collection<int, Attribute> $attributes
+ * @property-read int|null $attributes_count
  *
  * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Product newModelQuery()
@@ -27,14 +30,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProductFieldValue> $fieldValues
- * @property-read int|null $field_values_count
+ * @property-read Collection<int, ProductAttributeValue> $attributeValues
+ * @property-read int|null $attribute_values_count
  *
  * @mixin \Eloquent
  */
 class Product extends Model
 {
     use HasFactory;
+
+    /**
+     * @var string[]
+     */
+    protected $with = [
+        'attributeValues',
+    ];
 
     protected $guarded = [];
 
@@ -47,27 +57,30 @@ class Product extends Model
     }
 
     /**
-     * @return HasMany<ProductField>
+     * @return BelongsToMany<Attribute>
      */
-    public function fields(): HasMany
+    public function attributes(): BelongsToMany
     {
-        return $this->hasMany(
-            ProductField::class,
+        return $this->belongsToMany(
+            Attribute::class,
+            'family_attributes',
             'family_id',
+            'attribute_id',
             'family_id',
+            'id'
         );
     }
 
     /**
-     * @return HasMany<ProductFieldValue>
+     * @return HasMany<ProductAttributeValue>
      */
-    public function fieldValues(): HasMany
+    public function attributeValues(): HasMany
     {
-        return $this->hasMany(ProductFieldValue::class);
+        return $this->hasMany(ProductAttributeValue::class);
     }
 
-    public function valueForField(ProductField $field): ?ProductFieldValue
+    public function valueForAttribute(Attribute $attribute): ?ProductAttributeValue
     {
-        return $this->fieldValues->where('id', $field->id)->first() ?? null;
+        return $this->attributeValues->where('id', $attribute->id)->first() ?? null;
     }
 }

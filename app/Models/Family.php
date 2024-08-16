@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -11,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProductField> $fields
- * @property-read int|null $fields_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Attribute> $attributes
+ * @property-read int|null $attributes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $products
  * @property-read int|null $products_count
  *
@@ -42,10 +43,14 @@ class Family extends Model
     }
 
     /**
-     * @return HasMany<ProductField>
+     * @return BelongsToMany<Attribute>
      */
-    public function fields(): HasMany
+    public function attributes(): BelongsToMany
     {
-        return $this->hasMany(ProductField::class);
+        return $this->belongsToMany(
+            Attribute::class,
+            'family_attributes',
+        )
+            ->using(FamilyAttributePivot::class);
     }
 }

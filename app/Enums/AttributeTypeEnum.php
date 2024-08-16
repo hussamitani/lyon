@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum FieldTypeEnum: string
+enum AttributeTypeEnum: string
 {
     case SHORT_TEXT = 'short_text';
     case LONG_TEXT = 'long_text';

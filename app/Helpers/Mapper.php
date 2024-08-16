@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\Attribute;
 use App\Models\Product;
-use App\Models\ProductField;
 use Filament\Forms\Components\Field;
 
 class Mapper
@@ -11,10 +11,10 @@ class Mapper
     /**
      * @return array<Field>
      */
-    public static function mapProductFields(Product $product): array
+    public static function mapProductAttributes(Product $product): array
     {
-        return $product->family->fields()->get()->map(function (ProductField $field) {
-            return $field->toFilamentField();
+        return $product->family->attributes()->get()->map(function (Attribute $attribute) {
+            return $attribute->toFilamentField();
         })->toArray();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\Setup\CreateAdminJob;
 use App\Jobs\Setup\CreatePermissionsJob;
 use App\Jobs\Setup\CreateRolesJob;
 use Illuminate\Console\Command;
@@ -32,5 +33,8 @@ class SetupCommand extends Command
 
         dispatch_sync(new CreateRolesJob());
         $this->info('Created default Roles');
+
+        dispatch_sync(new CreateAdminJob());
+        $this->info('Created default Admin');
     }
 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->char('sku', 64);
             $table->foreignId('family_id')->constrained()
                 ->references('id')
                 ->on('families');

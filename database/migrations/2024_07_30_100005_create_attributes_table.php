@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_fields', function (Blueprint $table) {
+        Schema::create('attributes', function (Blueprint $table) {
             $table->id();
             $table->char('name', 144);
+            $table->char('code', 144)->unique();
             $table->string('description')->nullable();
-            $table->foreignId('family_id')
-                ->constrained()
-                ->references('id')
-                ->on('families')
-                ->onDelete('cascade');
-            $table->string('field_type');
-            $table->json('field_options')->nullable();
+            $table->string('attribute_type');
+            $table->json('attribute_options')->nullable();
             $table->boolean('required')->default(false);
         });
     }

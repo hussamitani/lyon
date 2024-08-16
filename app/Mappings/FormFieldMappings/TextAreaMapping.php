@@ -2,16 +2,16 @@
 
 namespace App\Mappings\FormFieldMappings;
 
-use App\Models\ProductField;
+use App\Models\Attribute;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Textarea;
 
 class TextAreaMapping implements FormFieldMapping
 {
-    public static function mapAsComponent(ProductField $field): Field
+    public static function mapAsComponent(Attribute $attribute): Field
     {
-        return Textarea::make('fields-'.$field->id.'-field_value')
-            ->label($field->name)
-            ->required($field->required);
+        return Textarea::make('attributes-'.$attribute->id.'-attribute_value')
+            ->label($attribute->name)
+            ->required($attribute->required);
     }
 }

@@ -2,22 +2,22 @@
 
 namespace App\Mappings\FormFieldMappings;
 
+use App\Models\Attribute;
 use App\Models\Product;
-use App\Models\ProductField;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\TextInput;
 
 class TextInputMapping implements FormFieldMapping
 {
-    public static function mapAsComponent(ProductField $field): Field
+    public static function mapAsComponent(Attribute $attribute): Field
     {
-        return TextInput::make('fields-'.$field->id.'-field_value')
-            ->default(function (Product $record) use ($field) {
-                return $record->valueForField($field)->field_value;
+        return TextInput::make('attributes-'.$attribute->id.'-attribute_value')
+            ->default(function (Product $record) use ($attribute) {
+                return $record->valueForAttribute($attribute)->attribute_value;
             })
             ->live()
             ->reactive()
-            ->label($field->name)
-            ->required($field->required);
+            ->label($attribute->name)
+            ->required($attribute->required);
     }
 }

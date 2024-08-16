@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\ProductFieldValue;
+use App\Models\ProductAttributeValue;
 use App\Models\User;
 
-class ProductFieldValuePolicy
+class ProductAttributeValuePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class ProductFieldValuePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ProductFieldValue $productFieldValue): bool
+    public function view(User $user, ProductAttributeValue $productAttributeValue): bool
     {
         return true;
     }
@@ -34,7 +34,7 @@ class ProductFieldValuePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ProductFieldValue $productFieldValue): bool
+    public function update(User $user, ProductAttributeValue $productAttributeValue): bool
     {
         return true;
     }
@@ -42,7 +42,7 @@ class ProductFieldValuePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ProductFieldValue $productFieldValue): bool
+    public function delete(User $user, ProductAttributeValue $productAttributeValue): bool
     {
         return true;
     }
@@ -50,7 +50,7 @@ class ProductFieldValuePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ProductFieldValue $productFieldValue): bool
+    public function restore(User $user, ProductAttributeValue $productAttributeValue): bool
     {
         return true;
     }
@@ -58,7 +58,7 @@ class ProductFieldValuePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ProductFieldValue $productFieldValue): bool
+    public function forceDelete(User $user, ProductAttributeValue $productAttributeValue): bool
     {
         return true;
     }

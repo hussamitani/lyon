@@ -2,17 +2,17 @@
 
 namespace App\Mappings\FormFieldMappings;
 
-use App\Models\ProductField;
+use App\Models\Attribute;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Field;
 
 class DatePickerMapping implements FormFieldMapping
 {
-    public static function mapAsComponent(ProductField $field): Field
+    public static function mapAsComponent(Attribute $attribute): Field
     {
-        return DatePicker::make('fields-'.$field->id.'-field_value')
+        return DatePicker::make('attributes-'.$attribute->id.'-attribute_value')
             ->format('d.m.Y')
-            ->label($field->name)
-            ->required($field->required);
+            ->label($attribute->name)
+            ->required($attribute->required);
     }
 }

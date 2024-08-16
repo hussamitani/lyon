@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\ProductField;
+use App\Models\Attribute;
 use App\Models\User;
 
-class ProductFieldPolicy
+class ProductAttributePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class ProductFieldPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ProductField $productConfiguration): bool
+    public function view(User $user, Attribute $productConfiguration): bool
     {
         return true;
     }
@@ -34,7 +34,7 @@ class ProductFieldPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ProductField $productConfiguration): bool
+    public function update(User $user, Attribute $productConfiguration): bool
     {
         return true;
     }
@@ -42,7 +42,7 @@ class ProductFieldPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ProductField $productConfiguration): bool
+    public function delete(User $user, Attribute $productConfiguration): bool
     {
         return true;
     }
@@ -50,7 +50,7 @@ class ProductFieldPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ProductField $productConfiguration): bool
+    public function restore(User $user, Attribute $productConfiguration): bool
     {
         return true;
     }
@@ -58,7 +58,7 @@ class ProductFieldPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ProductField $productConfiguration): bool
+    public function forceDelete(User $user, Attribute $productConfiguration): bool
     {
         return true;
     }

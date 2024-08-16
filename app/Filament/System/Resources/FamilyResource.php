@@ -2,8 +2,8 @@
 
 namespace App\Filament\System\Resources;
 
-use App\Enums\FieldTypeEnum;
 use App\Filament\System\Resources\FamilyResource\Pages;
+use App\Filament\System\Resources\FamilyResource\RelationManagers\AttributesRelationManager;
 use App\Models\Family;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -25,17 +25,7 @@ class FamilyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Repeater::make('fields')
-                    ->label('Fields')
-                    ->relationship('fields')
-                    ->schema([
-                        Forms\Components\TextInput::make('name'),
-                        Forms\Components\Select::make('field_type')
-                            ->options(FieldTypeEnum::options())
-                            ->default(FieldTypeEnum::SHORT_TEXT)
-                            ->required()
-                            ->label('Field Type'),
-                    ]),
+                Forms\Components\TextInput::make('name'),
             ]);
     }
 
@@ -71,7 +61,7 @@ class FamilyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AttributesRelationManager::class,
         ];
     }
 

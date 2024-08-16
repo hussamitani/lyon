@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ProductFieldSeeder extends Seeder
+class ProductAttributeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

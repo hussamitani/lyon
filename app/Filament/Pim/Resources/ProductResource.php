@@ -4,11 +4,13 @@ namespace App\Filament\Pim\Resources;
 
 use App\Filament\Pim\Resources\ProductResource\Pages;
 use App\Models\Product;
+use App\Models\ProductAttributeValue;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductResource extends Resource
 {
@@ -32,6 +34,13 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
+
+        $columns = function (?Product $record = null) {
+            return $record?->attributeValues->collect()->map(function (ProductAttributeValue $attributeValue) {
+                return $attributeValue->attribute->toFilamentField();
+            })->toArray();
+        };
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
@@ -44,6 +53,7 @@ class ProductResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                //...(fn (Product $record) => $columns($record))($record ?? null)
             ])
             ->filters([
                 //
@@ -64,6 +74,14 @@ class ProductResource extends Resource
         return [
             //
         ];
+    }
+
+    /**
+     * @return Builder<Product>
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery();
     }
 
     public static function getPages(): array

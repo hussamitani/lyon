@@ -5,7 +5,7 @@ namespace App\Filament\Pim\Resources\ProductResource\Pages;
 use App\Filament\Pim\Resources\ProductResource;
 use App\Helpers\Mapper;
 use App\Models\Product;
-use App\Models\ProductFieldValue;
+use App\Models\ProductAttributeValue;
 use Filament\Actions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -21,7 +21,7 @@ class EditProduct extends EditRecord
 
     public function form(Form $form): Form
     {
-        $fields = Mapper::mapProductFields($this->record);
+        $attributes = Mapper::mapProductAttributes($this->record);
 
         return $form
             ->schema([
@@ -32,22 +32,22 @@ class EditProduct extends EditRecord
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                ...$fields,
+                ...$attributes,
             ]);
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
         collect($data)
-            ->filter(fn ($value, $key) => str_contains($key, 'fields-'))
+            ->filter(fn ($value, $key) => str_contains($key, 'attributes-'))
             ->each(function ($value, $key) use (&$data) {
                 unset($data[$key]);
 
-                ProductFieldValue::updateOrInsert([
+                ProductAttributeValue::updateOrInsert([
                     'product_id' => $this->record->id,
-                    'field_id' => explode('-', $key)[1],
+                    'attribute_id' => explode('-', $key)[1],
                 ], [
-                    'field_value' => json_encode($value),
+                    'attribute_value' => json_encode($value),
                 ]);
             });
 
@@ -56,9 +56,9 @@ class EditProduct extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $values = $this->record->fieldValues->mapWithKeys(function (ProductFieldValue $field) {
+        $values = $this->record->attributeValues->mapWithKeys(function (ProductAttributeValue $attribute) {
             return [
-                'fields-'.$field->field_id.'-field_value' => $field->field_value,
+                'attributes-'.$attribute->attribute_id.'-attribute_value' => $attribute->attribute_value,
             ];
         })->toArray();
 
