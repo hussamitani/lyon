@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Casts\AttributeSettingsCast;
 use App\Enums\AttributeTypeEnum;
 use App\Mappings\FormFieldMappings;
+use App\ValueObjects\AttributeSettings;
 use Filament\Forms\Components\Field;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -17,6 +20,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property AttributeTypeEnum $attribute_type
  * @property string|null $attribute_options
  * @property bool $required
+ * @property string $code
+ * @property AttributeSettings $attribute_settings
+ * @property-read Collection<int, Family> $families
+ * @property-read int|null $families_count
  *
  * @method static \Database\Factories\ProductAttributeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute newModelQuery()
@@ -29,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereRequired($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereCode($value)
  *
  * @mixin \Eloquent
  */
@@ -48,7 +56,7 @@ class Attribute extends Model
         return [
             'required' => 'bool',
             'attribute_type' => AttributeTypeEnum::class,
-            'attribute_options' => 'array',
+            'attribute_settings' => AttributeSettingsCast::class,
         ];
     }
 

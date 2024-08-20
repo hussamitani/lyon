@@ -17,7 +17,7 @@ return new class extends Migration
             $table->char('code', 144)->unique();
             $table->string('description')->nullable();
             $table->string('attribute_type');
-            $table->json('attribute_options')->nullable();
+            $table->json('attribute_settings')->nullable();
             $table->boolean('required')->default(false);
         });
     }

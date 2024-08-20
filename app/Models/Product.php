@@ -32,6 +32,9 @@ use Illuminate\Support\Carbon;
  *
  * @property-read Collection<int, ProductAttributeValue> $attributeValues
  * @property-read int|null $attribute_values_count
+ * @property string $sku
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereSku($value)
  *
  * @mixin \Eloquent
  */

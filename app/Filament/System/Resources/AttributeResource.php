@@ -3,6 +3,7 @@
 namespace App\Filament\System\Resources;
 
 use App\Enums\AttributeTypeEnum;
+use App\Enums\InputFormatEnum;
 use App\Filament\System\Resources\AttributeResource\Pages;
 use App\Models\Attribute;
 use Filament\Forms;
@@ -25,17 +26,33 @@ class AttributeResource extends Resource
                     ->required()
                     ->maxLength(144),
                 Forms\Components\TextInput::make('code')
-                    ->unique('attributes', 'code')
+                    ->unique(table: Attribute::class, ignoreRecord: true)
                     ->regex(`[a-z-]+`)
                     ->required()
                     ->maxLength(144),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
+                Forms\Components\Textarea::make('description')
+                    ->maxLength(255)
+                    ->columnSpan(2),
                 Forms\Components\Select::make('attribute_type')
+                    ->searchable()
                     ->options(AttributeTypeEnum::options())
                     ->required(),
-                Forms\Components\TagsInput::make('attribute_options'),
-                Forms\Components\Toggle::make('required')
+                Forms\Components\Select::make('input_format')
+                    ->searchable()
+                    ->options(InputFormatEnum::options())
+                    ->required(),
+                Forms\Components\Toggle::make('is_required')
+                    ->default(false)
+                    ->inline(false)
+                    ->required(),
+                Forms\Components\Toggle::make('is_distributable')
+                    ->label(__('Value per Channel'))
+                    ->default(false)
+                    ->inline(false)
+                    ->required(),
+                Forms\Components\Toggle::make('is_territorial')
+                    ->label(__('Value per Territory'))
+                    ->default(false)
                     ->inline(false)
                     ->required(),
             ]);

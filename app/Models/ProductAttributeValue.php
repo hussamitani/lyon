@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductAttributeValue whereUpdatedAt($value)
  *
  * @property-read \App\Models\Attribute $attribute
+ * @property int $family_id
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductAttributeValue whereFamilyId($value)
  *
  * @mixin \Eloquent
  */

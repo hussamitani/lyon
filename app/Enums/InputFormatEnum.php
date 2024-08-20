@@ -19,4 +19,12 @@ enum InputFormatEnum: string
     case PERCENTAGE = 'percentage';
     case NUMBER = 'number';
     case COLOR = 'color';
+
+    /**
+     * @return array<string, string>
+     */
+    public static function options(): array
+    {
+        return array_column(self::cases(), 'name', 'value');
+    }
 }
