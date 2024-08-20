@@ -3,6 +3,7 @@
 namespace App\Filament\System\Resources\AttributeResource\Pages;
 
 use App\Filament\System\Resources\AttributeResource;
+use App\ValueObjects\AttributeSettings;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -15,5 +16,10 @@ class ViewAttribute extends ViewRecord
         return [
             Actions\EditAction::make(),
         ];
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        return parent::mutateFormDataBeforeFill(AttributeSettings::mutateBeforeFill($data));
     }
 }

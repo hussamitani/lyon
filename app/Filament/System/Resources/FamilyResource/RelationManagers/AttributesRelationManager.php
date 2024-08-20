@@ -27,19 +27,39 @@ class AttributesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('code')
             ->columns([
+                Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('code'),
+                Tables\Columns\IconColumn::make('attribute_settings.is_required')
+                    ->label(__('Required'))
+                    ->trueIcon(function (bool $state): string {
+                        return $state ?
+                            'heroicon-o-check-circle' :
+                            'heroicon-o-x-circle';
+                    }),
+                Tables\Columns\IconColumn::make('attribute_settings.is_distributable')
+                    ->label(' Value per distribution')
+                    ->trueIcon(function (bool $state): string {
+                        return $state ?
+                            'heroicon-o-check-circle' :
+                            'heroicon-o-x-circle';
+                    }),
+                Tables\Columns\IconColumn::make('attribute_settings.is_territorial')
+                    ->label(' Value per territory')
+                    ->trueIcon(function (bool $state): string {
+                        return $state ?
+                            'heroicon-o-check-circle' :
+                            'heroicon-o-x-circle';
+                    })
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
-                Tables\Actions\AssociateAction::make(),
+                //Tables\Actions\CreateAction::make(),
+                Tables\Actions\AssociateAction::make()->preloadRecordSelect(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\DissociateAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

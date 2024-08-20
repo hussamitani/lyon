@@ -22,13 +22,18 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('family_id')
-                    ->label('Family')
-                    ->searchable(['name'])
-                    ->relationship('family', 'name'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('sku')
+                    ->label('SKU')
+                    ->required()
+                    ->regex(`[A-Z0-9-][A-Z0-9-]+`),
+                Forms\Components\Select::make('family_id')
+                    ->label('Family')
+                    ->searchable(['name'])
+                    ->preload()
+                    ->relationship('family', 'name'),
             ]);
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @implements CastsAttributes<AttributeSettings, string>
+ * @implements CastsAttributes<array<string, mixed>, string>
  */
 class AttributeSettingsCast implements CastsAttributes
 {
@@ -18,17 +18,19 @@ class AttributeSettingsCast implements CastsAttributes
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function get(Model $model, string $key, mixed $value, array $attributes): AttributeSettings
+    public function get(Model $model, string $key, mixed $value, array $attributes): array
     {
         $settings = json_decode($value, true);
 
-        return new AttributeSettings(
+        $attributeSettings = new AttributeSettings(
             AttributeTypeEnum::from($settings['attribute_type']),
             InputFormatEnum::from($settings['input_format']),
             $settings['is_required'],
             $settings['is_distributable'],
             $settings['is_territorial'],
         );
+
+        return $attributeSettings->toArray();
     }
 
     /**
@@ -40,6 +42,6 @@ class AttributeSettingsCast implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): array
     {
-        return ['attribute_settings' => $value->toArray()];
+        return ['attribute_settings' => json_encode($value)];
     }
 }

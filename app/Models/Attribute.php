@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\AttributeSettingsCast;
 use App\Enums\AttributeTypeEnum;
+use App\Enums\InputFormatEnum;
 use App\Mappings\FormFieldMappings;
 use App\ValueObjects\AttributeSettings;
 use Filament\Forms\Components\Field;
@@ -11,13 +12,14 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 
 /**
  * @property int $id
+ * @property AttributeTypeEnum $attributeType
  * @property string $name
  * @property string|null $description
  * @property int $family_id
- * @property AttributeTypeEnum $attribute_type
  * @property string|null $attribute_options
  * @property bool $required
  * @property string $code
@@ -55,9 +57,21 @@ class Attribute extends Model
     {
         return [
             'required' => 'bool',
-            'attribute_type' => AttributeTypeEnum::class,
+            'input_format' => InputFormatEnum::class,
             'attribute_settings' => AttributeSettingsCast::class,
         ];
+    }
+
+    /**
+     * @return CastAttribute
+     */
+    public function attributeType(): CastAttribute
+    {
+        return CastAttribute::make(
+            get: function (mixed $value, array $attributes) {
+                return AttributeSettings::from($attributes['attribute_settings'])->attribute_type;
+            },
+        );
     }
 
     /**
@@ -75,9 +89,13 @@ class Attribute extends Model
         );
     }
 
-    public function toFilamentField(): Field
+    public function toFilamentField(): ?Field
     {
-        return match ($this->attribute_type) {
+        if (! $this->attributeType) {
+            return null;
+        }
+
+        return match ($this->attributeType) {
             AttributeTypeEnum::SHORT_TEXT => FormFieldMappings\TextInputMapping::mapAsComponent($this),
             AttributeTypeEnum::LONG_TEXT => FormFieldMappings\TextAreaMapping::mapAsComponent($this),
             AttributeTypeEnum::SINGLE_SELECT => FormFieldMappings\SingleSelectMapping::mapAsComponent($this),
