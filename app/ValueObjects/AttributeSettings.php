@@ -2,14 +2,14 @@
 
 namespace App\ValueObjects;
 
-use App\Enums\AttributeTypeEnum;
+use App\Enums\FieldTypeEnum;
 use App\Enums\InputFormatEnum;
-use http\Exception\RuntimeException;
+use Exception;
 
 readonly class AttributeSettings
 {
     public function __construct(
-        public AttributeTypeEnum $attribute_type,
+        public FieldTypeEnum $type,
         public InputFormatEnum $input_format,
         public bool $is_required,
         public bool $is_distributable,
@@ -18,39 +18,39 @@ readonly class AttributeSettings
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
     public static function mutateBeforeFill(array $data): array
     {
-        $attributeSettings = $data['attribute_settings'];
+        $attributeSettings = $data['settings'];
 
-        $data['attribute_type'] = $attributeSettings['attribute_type'];
+        $data['type'] = $attributeSettings['type'];
         $data['input_format'] = $attributeSettings['input_format'];
         $data['is_required'] = $attributeSettings['is_required'];
         $data['is_distributable'] = $attributeSettings['is_distributable'];
         $data['is_territorial'] = $attributeSettings['is_territorial'];
 
-        unset($data['attribute_settings']);
+        unset($data['settings']);
 
         return $data;
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
     public static function mutateBeforeSave(array $data): array
     {
-        $data['attribute_settings'] = new AttributeSettings(
-            attribute_type: $data['attribute_type'],
+        $data['settings'] = new AttributeSettings(
+            type: $data['type'],
             input_format: $data['input_format'],
             is_required: $data['is_required'],
             is_distributable: $data['is_distributable'],
             is_territorial: $data['is_territorial'],
         );
 
-        //unset($data['attribute_type']);
+        //unset($data['type']);
         unset($data['input_format']);
         unset($data['is_required']);
         unset($data['is_distributable']);
@@ -59,22 +59,26 @@ readonly class AttributeSettings
         return $data;
     }
 
-    public static function from(mixed $attribute_settings): self
+    /**
+     * @throws Exception
+     */
+    public static function from(mixed $settings): self
     {
-        if (is_array($attribute_settings)) {
+        if (is_array($settings)) {
             return new AttributeSettings(
-                attribute_type: $attribute_settings['attribute_type'],
-                input_format: $attribute_settings['input_format'],
-                is_required: $attribute_settings['is_required'],
-                is_distributable: $attribute_settings['is_distributable'],
-                is_territorial: $attribute_settings['is_territorial'],
+                type: $settings['type'],
+                input_format: $settings['input_format'],
+                is_required: $settings['is_required'],
+                is_distributable: $settings['is_distributable'],
+                is_territorial: $settings['is_territorial'],
             );
         }
 
-        if (is_string($attribute_settings)) {
-            $attribute_settings_array = json_decode($attribute_settings, true);
+        if (is_string($settings)) {
+            $attribute_settings_array = json_decode($settings, true);
+
             return new AttributeSettings(
-                attribute_type: AttributeTypeEnum::from($attribute_settings_array['attribute_type']),
+                type: FieldTypeEnum::from($attribute_settings_array['type']),
                 input_format: InputFormatEnum::from($attribute_settings_array['input_format']),
                 is_required: $attribute_settings_array['is_required'],
                 is_distributable: $attribute_settings_array['is_distributable'],
@@ -82,7 +86,7 @@ readonly class AttributeSettings
             );
         }
 
-        throw new RuntimeException("Could not parse attribute settings data");
+        throw new Exception('Could not parse attribute settings data');
     }
 
     /**
@@ -91,7 +95,7 @@ readonly class AttributeSettings
     public function toArray(): array
     {
         return [
-            'attribute_type' => $this->attribute_type->value,
+            'type' => $this->type->value,
             'input_format' => $this->input_format->value,
             'is_required' => $this->is_required,
             'is_distributable' => $this->is_distributable,

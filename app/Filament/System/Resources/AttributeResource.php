@@ -2,7 +2,7 @@
 
 namespace App\Filament\System\Resources;
 
-use App\Enums\AttributeTypeEnum;
+use App\Enums\FieldTypeEnum;
 use App\Enums\InputFormatEnum;
 use App\Filament\System\Resources\AttributeResource\Pages;
 use App\Models\Attribute;
@@ -33,9 +33,9 @@ class AttributeResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->maxLength(255)
                     ->columnSpan(2),
-                Forms\Components\Select::make('attribute_type')
+                Forms\Components\Select::make('type')
                     ->searchable()
-                    ->options(AttributeTypeEnum::options())
+                    ->options(FieldTypeEnum::options())
                     ->required(),
                 Forms\Components\Select::make('input_format')
                     ->searchable()
@@ -66,7 +66,7 @@ class AttributeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('attribute_type')
+                Tables\Columns\TextColumn::make('type')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('required')
                     ->boolean(),

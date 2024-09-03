@@ -29,27 +29,27 @@ class AttributesRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('code'),
-                Tables\Columns\IconColumn::make('attribute_settings.is_required')
+                Tables\Columns\IconColumn::make('settings.is_required')
                     ->label(__('Required'))
                     ->trueIcon(function (bool $state): string {
                         return $state ?
                             'heroicon-o-check-circle' :
                             'heroicon-o-x-circle';
                     }),
-                Tables\Columns\IconColumn::make('attribute_settings.is_distributable')
+                Tables\Columns\IconColumn::make('settings.is_distributable')
                     ->label(' Value per distribution')
                     ->trueIcon(function (bool $state): string {
                         return $state ?
                             'heroicon-o-check-circle' :
                             'heroicon-o-x-circle';
                     }),
-                Tables\Columns\IconColumn::make('attribute_settings.is_territorial')
+                Tables\Columns\IconColumn::make('settings.is_territorial')
                     ->label(' Value per territory')
                     ->trueIcon(function (bool $state): string {
                         return $state ?
                             'heroicon-o-check-circle' :
                             'heroicon-o-x-circle';
-                    })
+                    }),
             ])
             ->filters([
                 //
