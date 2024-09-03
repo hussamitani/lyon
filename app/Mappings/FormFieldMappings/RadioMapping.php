@@ -12,7 +12,6 @@ class RadioMapping implements FormFieldMapping
     {
         return Radio::make('attributes-'.$attribute->id.'-attribute_value')
             ->options($attribute->attribute_options)
-            ->label($attribute->name)
-            ->required($attribute->required);
+            ->label($attribute->name);
     }
 }

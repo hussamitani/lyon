@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string|null $description
  * @property int $family_id
  * @property string|null $attribute_options
- * @property bool $required
  * @property string $code
  * @property AttributeSettings $settings
  * @property-read Collection<int, Family> $families
@@ -38,7 +37,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereRequired($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereCode($value)
  *
  * @mixin \Eloquent
@@ -57,7 +55,6 @@ class Attribute extends Model
     protected function casts(): array
     {
         return [
-            'required' => 'bool',
             'is_distributable' => 'bool',
             'is_territorial' => 'bool',
             'type' => FieldTypeEnum::class,
@@ -69,7 +66,7 @@ class Attribute extends Model
     /**
      * @return CastAttribute
      */
-    public function type(): CastAttribute
+    public function settings(): CastAttribute
     {
         return CastAttribute::make(
             get: function (mixed $value, array $attributes) {

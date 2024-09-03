@@ -10,9 +10,11 @@ class DateTimePickerMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        return DateTimePicker::make('attributes-'.$attribute->id.'-attribute_value')
-            ->format('d.m.Y H:i')
-            ->label($attribute->name)
-            ->required($attribute->required);
+        return DefaultFormField::map(
+            DateTimePicker::make('attributes-'.$attribute->id.'-attribute_value')
+                ->format('d.m.Y H:i')
+                ->label($attribute->name),
+            $attribute
+        );
     }
 }

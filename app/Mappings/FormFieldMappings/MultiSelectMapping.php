@@ -10,11 +10,11 @@ class MultiSelectMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        $formField = Select::make('attributes-'.$attribute->id.'-attribute_value')
-            ->multiple(true)
-            ->options($attribute->attribute_options)
-            ->label($attribute->name);
-
-        return DefaultFormField::map($formField, $attribute);
+        return DefaultFormField::map(
+            Select::make('attributes-'.$attribute->id.'-attribute_value')
+                ->multiple(true)
+                ->options($attribute->attribute_options)
+                ->label($attribute->name),
+            $attribute);
     }
 }

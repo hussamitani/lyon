@@ -10,10 +10,12 @@ class SingleSelectMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        return Select::make('attributes-'.$attribute->id.'-attribute_value')
-            ->multiple(false)
-            ->options($attribute->attribute_options)
-            ->label($attribute->name)
-            ->required($attribute->required);
+        return DefaultFormField::map(
+            Select::make('attributes-'.$attribute->id.'-attribute_value')
+                ->multiple(false)
+                ->options($attribute->attribute_options)
+                ->label($attribute->name),
+            $attribute
+        );
     }
 }

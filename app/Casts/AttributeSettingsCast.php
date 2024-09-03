@@ -24,9 +24,6 @@ class AttributeSettingsCast implements CastsAttributes
         $settings = json_decode($value, true);
 
         $attributeSettings = new AttributeSettings(
-            FieldTypeEnum::from($settings['type']),
-            InputFormatEnum::from($settings['input_format']),
-            $settings['is_required'],
             $settings['is_distributable'],
             $settings['is_territorial'],
         );

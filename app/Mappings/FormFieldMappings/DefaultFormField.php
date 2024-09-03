@@ -9,6 +9,6 @@ class DefaultFormField
 {
     public static function map(Field $field, Attribute $attribute): Field
     {
-        return $field->required($attribute->required);
+        return $field->live()->reactive();
     }
 }

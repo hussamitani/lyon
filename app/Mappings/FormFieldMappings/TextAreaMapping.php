@@ -10,8 +10,10 @@ class TextAreaMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        return Textarea::make('attributes-'.$attribute->id.'-attribute_value')
-            ->label($attribute->name)
-            ->required($attribute->required);
+        return DefaultFormField::map(
+            Textarea::make('attributes-'.$attribute->id.'-attribute_value')
+                ->label($attribute->name),
+            $attribute
+        );
     }
 }

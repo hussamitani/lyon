@@ -10,9 +10,11 @@ class DatePickerMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        return DatePicker::make('attributes-'.$attribute->id.'-attribute_value')
-            ->format('d.m.Y')
-            ->label($attribute->name)
-            ->required($attribute->required);
+        return DefaultFormField::map(
+            DatePicker::make('attributes-'.$attribute->id.'-attribute_value')
+                ->format('d.m.Y')
+                ->label($attribute->name),
+            $attribute
+        );
     }
 }

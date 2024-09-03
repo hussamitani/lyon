@@ -41,10 +41,6 @@ class AttributeResource extends Resource
                     ->searchable()
                     ->options(InputFormatEnum::options())
                     ->required(),
-                Forms\Components\Toggle::make('is_required')
-                    ->default(false)
-                    ->inline(false)
-                    ->required(),
                 Forms\Components\Toggle::make('is_distributable')
                     ->label(__('Value per Channel'))
                     ->default(false)
@@ -68,8 +64,8 @@ class AttributeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('required')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('input_format')
+                    ->searchable(),
             ])
             ->filters([
                 //

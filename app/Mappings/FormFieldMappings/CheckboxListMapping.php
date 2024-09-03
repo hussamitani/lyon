@@ -10,9 +10,11 @@ class CheckboxListMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        return CheckboxList::make('attributes-'.$attribute->id.'-attribute_value')
-            ->options($attribute->attribute_options)
-            ->label($attribute->name)
-            ->required($attribute->required);
+        return DefaultFormField::map(
+            CheckboxList::make('attributes-'.$attribute->id.'-attribute_value')
+                ->options($attribute->attribute_options)
+                ->label($attribute->name),
+            $attribute
+        );
     }
 }
