@@ -2,6 +2,7 @@
 
 namespace App\Mappings\FormFieldMappings;
 
+use App\Mappings\FormFieldSetup\DefaultFieldSetup;
 use App\Models\Attribute;
 use App\Models\Product;
 use Filament\Forms\Components\Field;
@@ -11,12 +12,12 @@ class TextInputMapping implements FormFieldMapping
 {
     public static function mapAsComponent(Attribute $attribute): Field
     {
-        return DefaultFormField::map(
-            TextInput::make('attributes-'.$attribute->id.'-attribute_value')
-                    ->default(function (Product $record) use ($attribute) {
-                        return $record->valueForAttribute($attribute)->attribute_value;
-                    })
-                    ->label($attribute->name),
-            $attribute);
+        $field = TextInput::make('attributes-'.$attribute->id.'-attribute_value')
+            ->label($attribute->name)
+            ->default(function (Product $record) use ($attribute) {
+                return $record->valueForAttribute($attribute)->attribute_value;
+            });
+
+        return DefaultFieldSetup::map($field, $attribute);
     }
 }

@@ -6,6 +6,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class AttributesRelationManager extends RelationManager
@@ -26,16 +27,13 @@ class AttributesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('code')
+            ->defaultSort('sort')
+            ->reorderable('sort')
             ->columns([
+                TextColumn::make('sort')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('code'),
-                Tables\Columns\IconColumn::make('settings.is_required')
-                    ->label(__('Required'))
-                    ->trueIcon(function (bool $state): string {
-                        return $state ?
-                            'heroicon-o-check-circle' :
-                            'heroicon-o-x-circle';
-                    }),
                 Tables\Columns\IconColumn::make('settings.is_distributable')
                     ->label(' Value per distribution')
                     ->trueIcon(function (bool $state): string {

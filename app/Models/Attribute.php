@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @property int $id
  * @property FieldTypeEnum $type
- * @property InputFormatEnum $inputFormat
+ * @property InputFormatEnum $input_format
  * @property string $name
  * @property string|null $description
  * @property int $family_id
@@ -63,14 +63,11 @@ class Attribute extends Model
         ];
     }
 
-    /**
-     * @return CastAttribute
-     */
     public function settings(): CastAttribute
     {
         return CastAttribute::make(
             get: function (mixed $value, array $attributes) {
-                return AttributeSettings::from($attributes['settings'])->type;
+                return AttributeSettings::from($attributes['settings']);
             },
         );
     }

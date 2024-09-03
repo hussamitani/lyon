@@ -2,8 +2,6 @@
 
 namespace App\Casts;
 
-use App\Enums\FieldTypeEnum;
-use App\Enums\InputFormatEnum;
 use App\ValueObjects\AttributeSettings;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;

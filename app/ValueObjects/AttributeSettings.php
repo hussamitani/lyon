@@ -2,8 +2,6 @@
 
 namespace App\ValueObjects;
 
-use App\Enums\FieldTypeEnum;
-use App\Enums\InputFormatEnum;
 use Exception;
 
 readonly class AttributeSettings
