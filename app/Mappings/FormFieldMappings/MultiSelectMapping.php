@@ -14,7 +14,7 @@ class MultiSelectMapping implements FormFieldMapping
         return DefaultFieldSetup::map(
             Select::make('attributes-'.$attribute->id.'-attribute_value')
                 ->multiple(true)
-                ->options($attribute->attribute_options)
+                ->options($attribute->options->pluck('value', 'id'))
                 ->label($attribute->name),
             $attribute);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\System\Resources\FamilyResource\RelationManagers;
 
+use App\Models\Attribute;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -27,10 +28,10 @@ class AttributesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('code')
-            ->defaultSort('sort')
-            ->reorderable('sort')
+            ->defaultSort('order')
+            ->reorderable('order')
             ->columns([
-                TextColumn::make('sort')
+                TextColumn::make('order')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('code'),
@@ -54,7 +55,10 @@ class AttributesRelationManager extends RelationManager
             ])
             ->headerActions([
                 //Tables\Actions\CreateAction::make(),
-                Tables\Actions\AssociateAction::make()->preloadRecordSelect(),
+                //Tables\Actions\AttachAction::make(),
+                Tables\Actions\AssociateAction::make()
+                    ->recordSelectOptionsQuery(fn () => Attribute::query())
+                //    ->preloadRecordSelect(),
             ])
             ->actions([
                 Tables\Actions\DissociateAction::make(),

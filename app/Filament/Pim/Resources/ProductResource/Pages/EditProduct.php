@@ -33,7 +33,7 @@ class EditProduct extends EditRecord
                     ->required()
                     ->maxLength(255),
                 ...$attributes,
-            ]);
+            ] /*+ $attributes*/);
     }
 
     protected function mutateFormDataBeforeSave(array $data): array

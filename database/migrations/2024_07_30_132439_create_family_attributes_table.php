@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('family_attributes', function (Blueprint $table) {
-            $table->foreignId('family_id')->constrained('products')->cascadeOnDelete();
+            $table->foreignId('family_id')->constrained('families')->cascadeOnDelete();
             $table->foreignId('attribute_id')->constrained('attributes')->cascadeOnDelete();
-            $table->integer('sort')->default(0);
+            $table->integer('order')->default(0);
             $table->unique(['family_id', 'attribute_id']);
             //$table->unique(['family_id', 'sort']);
         });

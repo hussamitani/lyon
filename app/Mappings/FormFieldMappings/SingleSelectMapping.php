@@ -13,9 +13,11 @@ class SingleSelectMapping implements FormFieldMapping
     {
         return DefaultFieldSetup::map(
             Select::make('attributes-'.$attribute->id.'-attribute_value')
+                ->label($attribute->name)
                 ->multiple(false)
-                ->options($attribute->attribute_options)
-                ->label($attribute->name),
+                ->searchable(true)
+                ->options($attribute->options->pluck('value', 'id'))
+                ->preload(),
             $attribute
         );
     }

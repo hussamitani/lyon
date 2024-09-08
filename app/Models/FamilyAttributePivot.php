@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property int $family_id
  * @property int $attribute_id
  * @property int $sort
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|FamilyAttributePivot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FamilyAttributePivot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FamilyAttributePivot query()
  * @method static \Illuminate\Database\Eloquent\Builder|FamilyAttributePivot whereAttributeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FamilyAttributePivot whereFamilyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|FamilyAttributePivot whereSort($value)
  *
  * @mixin \Eloquent
  */

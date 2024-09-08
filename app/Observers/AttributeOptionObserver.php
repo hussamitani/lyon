@@ -15,6 +15,16 @@ class AttributeOptionObserver
     }
 
     /**
+     * Handle the AttributeOption "created" event.
+     */
+    public function creating(AttributeOption $attributeOption): void
+    {
+        if (! $attributeOption->order) {
+            $attributeOption->order = $attributeOption->attribute->options()->count() + 1;
+        }
+    }
+
+    /**
      * Handle the AttributeOption "updated" event.
      */
     public function updated(AttributeOption $attributeOption): void

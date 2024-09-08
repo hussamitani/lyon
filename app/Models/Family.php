@@ -51,6 +51,7 @@ class Family extends Model
             Attribute::class,
             'family_attributes',
         )
+            ->orderBy('order')
             ->using(FamilyAttributePivot::class);
     }
 }

@@ -9,8 +9,8 @@ class DefaultFieldSetup
 {
     public static function map(Field $field, Attribute $attribute): Field
     {
-        return $attribute->input_format->setup($field
-            ->live()
-            ->reactive());
+        return $attribute->input_format->setup(
+            $field->live()->reactive()
+        );
     }
 }

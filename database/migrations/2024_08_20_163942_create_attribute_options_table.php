@@ -18,8 +18,6 @@ return new class extends Migration
             $table->integer('order');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['attribute_id', 'order']);
         });
     }
 

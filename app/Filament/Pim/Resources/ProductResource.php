@@ -40,16 +40,17 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
 
-        $columns = function (?Product $record = null) {
-            return $record?->attributeValues->collect()->map(function (ProductAttributeValue $attributeValue) {
-                return $attributeValue->attribute->toFilamentField();
-            })->toArray();
-        };
+        //$columns = function (?Product $record = null) {
+        //    return $record?->attributeValues->collect()->map(function (ProductAttributeValue $attributeValue) {
+        //        return $attributeValue->attribute->toFilamentField();
+        //    })->toArray();
+        //};
 
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('family.name'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

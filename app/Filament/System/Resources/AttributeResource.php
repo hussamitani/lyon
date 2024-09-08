@@ -5,6 +5,7 @@ namespace App\Filament\System\Resources;
 use App\Enums\FieldTypeEnum;
 use App\Enums\InputFormatEnum;
 use App\Filament\System\Resources\AttributeResource\Pages;
+use App\Filament\System\Resources\AttributeResource\RelationManagers\OptionsRelationManager;
 use App\Models\Attribute;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -58,6 +59,8 @@ class AttributeResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
@@ -84,7 +87,7 @@ class AttributeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OptionsRelationManager::class,
         ];
     }
 

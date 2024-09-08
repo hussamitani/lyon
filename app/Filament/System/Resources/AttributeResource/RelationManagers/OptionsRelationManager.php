@@ -2,14 +2,17 @@
 
 namespace App\Filament\System\Resources\AttributeResource\RelationManagers;
 
+use App\Mappings\FormFieldSetup\DefaultFieldSetup;
+use App\Models\Attribute;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+/**
+ * @property Attribute $ownerRecord
+ */
 class OptionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'options';
@@ -18,9 +21,11 @@ class OptionsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('value')
-                    ->required()
-                    ->maxLength(255),
+                DefaultFieldSetup::map(
+                    Forms\Components\TextInput::make('value')
+                        ->label($this->ownerRecord->name),
+                    $this->ownerRecord
+                )
             ]);
     }
 
@@ -28,7 +33,10 @@ class OptionsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('value')
+            ->reorderable('order')
+            ->defaultSort('order')
             ->columns([
+                Tables\Columns\TextColumn::make('order'),
                 Tables\Columns\TextColumn::make('value'),
             ])
             ->filters([

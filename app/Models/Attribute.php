@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -21,11 +22,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name
  * @property string|null $description
  * @property int $family_id
- * @property string|null $attribute_options
  * @property string $code
  * @property AttributeSettings $settings
  * @property-read Collection<int, Family> $families
  * @property-read int|null $families_count
+ * @property-read AttributeOption[]|Collection<AttributeOption> $options
+ * @property-read int $options_count
  *
  * @method static \Database\Factories\ProductAttributeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute newModelQuery()
@@ -38,6 +40,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereInputFormat($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Attribute whereSettings($value)
  *
  * @mixin \Eloquent
  */
@@ -63,6 +67,9 @@ class Attribute extends Model
         ];
     }
 
+    /**
+     * @return CastAttribute
+     */
     public function settings(): CastAttribute
     {
         return CastAttribute::make(
@@ -85,6 +92,14 @@ class Attribute extends Model
             'id',
             'id',
         );
+    }
+
+    /**
+     * @return HasMany<AttributeOption>
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(AttributeOption::class)->orderBy('order');
     }
 
     public function toFilamentField(): ?Field

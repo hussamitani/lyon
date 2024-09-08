@@ -6,7 +6,6 @@ use App\Mappings\FormFieldSetup\DefaultFieldSetup;
 use App\Models\Attribute;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Textarea;
 
 class TextAreaMapping implements FormFieldMapping
 {
