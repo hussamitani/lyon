@@ -18,25 +18,25 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class SystemPanelProvider extends PanelProvider
+class SettingsPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('system')
-            ->path('system')
+            ->id('settings')
+            ->path('settings')
             ->login(fn () => redirect()->route('filament.pim.auth.login'))
-            ->brandName('PIM / System')
+            ->brandName('PIM / Settings')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::Full)
             ->colors([
                 'primary' => Color::Red,
             ])
-            ->discoverResources(in: app_path('Filament/System/Resources'), for: 'App\\Filament\\System\\Resources')
-            ->discoverPages(in: app_path('Filament/System/Pages'), for: 'App\\Filament\\System\\Pages')
+            ->discoverResources(in: app_path('Filament/Settings/Resources'), for: 'App\\Filament\\Settings\\Resources')
+            ->discoverPages(in: app_path('Filament/Settings/Pages'), for: 'App\\Filament\\Settings\\Pages')
             ->pages([
             ])
-            ->discoverWidgets(in: app_path('Filament/System/Widgets'), for: 'App\\Filament\\System\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Settings/Widgets'), for: 'App\\Filament\\Settings\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,

@@ -26,10 +26,10 @@ class FilamentPanelHelper
                 ->url('/admin')
                 ->sort(1),
             MenuItem::make()
-                ->visible(fn () => Auth::check() && Auth::user()->canAccessSystemPanel())
-                ->label(trans('navigation.system'))
+                ->visible(fn () => Auth::check() && Auth::user()->canAccessSettingsPanel())
+                ->label(trans('navigation.settings'))
                 ->icon('heroicon-o-cog-8-tooth')
-                ->url('/system')
+                ->url('/settings')
                 ->sort(1),
         ];
     }

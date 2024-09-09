@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\System\Resources\AttributeResource\RelationManagers;
+namespace App\Filament\Settings\Resources\AttributeResource\RelationManagers;
 
 use App\Mappings\FormFieldSetup\DefaultFieldSetup;
 use App\Models\Attribute;

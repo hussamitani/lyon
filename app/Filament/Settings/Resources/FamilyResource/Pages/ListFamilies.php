@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\System\Resources\FamilyResource\Pages;
+namespace App\Filament\Settings\Resources\FamilyResource\Pages;
 
-use App\Filament\System\Resources\FamilyResource;
+use App\Filament\Settings\Resources\FamilyResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 

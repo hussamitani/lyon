@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\System\Resources;
+namespace App\Filament\Settings\Resources;
 
-use App\Filament\System\Resources\FamilyResource\Pages;
-use App\Filament\System\Resources\FamilyResource\RelationManagers\AttributesRelationManager;
+use App\Filament\Settings\Resources\FamilyResource\Pages;
+use App\Filament\Settings\Resources\FamilyResource\RelationManagers\AttributesRelationManager;
 use App\Models\Family;
 use Filament\Forms;
 use Filament\Forms\Form;

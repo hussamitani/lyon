@@ -24,7 +24,7 @@ class RoleResource extends Resource
     {
         $pimPermissions = Permission::where('key', 'LIKE', 'pim_%')->get();
         $adminPermissions = Permission::where('key', 'LIKE', 'admin_%')->get();
-        $systemPermissions = Permission::where('key', 'LIKE', 'system_%')->get();
+        $settingsPermissions = Permission::where('key', 'LIKE', 'settings_%')->get();
 
         return $form
             ->schema([
@@ -43,13 +43,13 @@ class RoleResource extends Resource
                         ->options($pimPermissions->pluck('name', 'id'))
                         ->descriptions($pimPermissions->pluck('description', 'id')),
                 ])->columns(1),
-                Forms\Components\Section::make('System Settings Permissions')->schema([
+                Forms\Components\Section::make('Settings Permissions')->schema([
                     Forms\Components\CheckboxList::make('permissions')
                         ->hiddenLabel()
                         ->relationship('permissions', 'permissions')
                         ->columns(3)
-                        ->options($systemPermissions->pluck('name', 'id'))
-                        ->descriptions($systemPermissions->pluck('description', 'id')),
+                        ->options($settingsPermissions->pluck('name', 'id'))
+                        ->descriptions($settingsPermissions->pluck('description', 'id')),
                 ])->columns(1),
                 Forms\Components\Section::make('Administrative Permissions')->schema([
                     Forms\Components\CheckboxList::make('permissions')

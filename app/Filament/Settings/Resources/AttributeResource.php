@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\System\Resources;
+namespace App\Filament\Settings\Resources;
 
 use App\Enums\FieldTypeEnum;
 use App\Enums\InputFormatEnum;
-use App\Filament\System\Resources\AttributeResource\Pages;
-use App\Filament\System\Resources\AttributeResource\RelationManagers\OptionsRelationManager;
+use App\Filament\Settings\Resources\AttributeResource\Pages;
+use App\Filament\Settings\Resources\AttributeResource\RelationManagers\OptionsRelationManager;
 use App\Models\Attribute;
 use Filament\Forms;
 use Filament\Forms\Form;

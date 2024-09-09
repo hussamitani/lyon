@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\System\Resources\AttributeResource\Pages;
+namespace App\Filament\Settings\Resources\AttributeResource\Pages;
 
-use App\Filament\System\Resources\AttributeResource;
+use App\Filament\Settings\Resources\AttributeResource;
 use App\Models\Attribute;
 use App\ValueObjects\AttributeSettings;
 use Filament\Resources\Pages\CreateRecord;

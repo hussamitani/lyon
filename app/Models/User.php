@@ -111,8 +111,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             return false;
         }
 
-        if ($panel->getId() === 'system') {
-            return $this->canAccessSystemPanel();
+        if ($panel->getId() === 'settings') {
+            return $this->canAccessSettingsPanel();
         }
 
         if ($panel->getId() === 'admin') {
@@ -132,10 +132,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         // return $this->hasAnyPermission(Permission::where('key', 'like', 'pim%')->get()->pluck('key')->values()->toArray());
     }
 
-    public function canAccessSystemPanel(): bool
+    public function canAccessSettingsPanel(): bool
     {
         return true;
-        // return $this->hasAnyPermission(Permission::where('key', 'like', 'system%')->get()->pluck('key')->values()->toArray());
+        // return $this->hasAnyPermission(Permission::where('key', 'like', 'settings%')->get()->pluck('key')->values()->toArray());
     }
 
     public function canAccessAdminPanel(): bool

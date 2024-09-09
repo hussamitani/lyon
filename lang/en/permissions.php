@@ -21,19 +21,19 @@ return [
     ],
     PermissionEnum::ADMIN_ROLE_VIEW->value => [
         'name' => 'Admin | View roles',
-        'description' => 'Allows the user to view roles defined in the system in the admin panel.',
+        'description' => 'Allows the user to view roles defined in the settings in the admin panel.',
     ],
     PermissionEnum::ADMIN_ROLE_CREATE->value => [
         'name' => 'Admin | Create roles',
-        'description' => 'Allows the user to create roles in the system in the admin panel.',
+        'description' => 'Allows the user to create roles in the settings in the admin panel.',
     ],
     PermissionEnum::ADMIN_ROLE_UPDATE->value => [
         'name' => 'Admin | Update roles',
-        'description' => 'Allows the user to update roles defined in the system in the admin panel.',
+        'description' => 'Allows the user to update roles defined in the settings in the admin panel.',
     ],
     PermissionEnum::ADMIN_ROLE_DELETE->value => [
         'name' => 'Admin | Delete roles',
-        'description' => 'Allows the user to delete roles defined in the system from the admin panel.',
+        'description' => 'Allows the user to delete roles defined in the settings from the admin panel.',
     ],
     PermissionEnum::ADMIN_PERMISSION_VIEW->value => [
         'name' => 'Admin | View permissions',

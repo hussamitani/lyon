@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\System\Resources\FamilyResource\RelationManagers;
+namespace App\Filament\Settings\Resources\FamilyResource\RelationManagers;
 
 use App\Models\Attribute;
 use Filament\Forms;
