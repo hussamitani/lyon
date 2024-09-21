@@ -28,13 +28,13 @@ class SetupCommand extends Command
      */
     public function handle(): void
     {
-        dispatch_sync(new CreatePermissionsJob());
+        dispatch_sync(new CreatePermissionsJob);
         $this->info('Created Permissions');
 
-        dispatch_sync(new CreateRolesJob());
+        dispatch_sync(new CreateRolesJob);
         $this->info('Created default Roles');
 
-        dispatch_sync(new CreateAdminJob());
+        dispatch_sync(new CreateAdminJob);
         $this->info('Created default Admin');
     }
 }

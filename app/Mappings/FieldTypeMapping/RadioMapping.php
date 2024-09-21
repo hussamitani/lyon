@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mappings\FormFieldMappings;
+namespace App\Mappings\FieldTypeMapping;
 
 use App\Models\Attribute;
 use Filament\Forms\Components\Field;

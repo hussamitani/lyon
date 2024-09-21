@@ -2,8 +2,8 @@
 
 namespace App\Filament\Settings\Resources;
 
-use App\Enums\FieldTypeEnum;
-use App\Enums\InputFormatEnum;
+use App\Enums\AttributeFormatEnum;
+use App\Enums\AttributeTypeEnum;
 use App\Filament\Settings\Resources\AttributeResource\Pages;
 use App\Filament\Settings\Resources\AttributeResource\RelationManagers\OptionsRelationManager;
 use App\Models\Attribute;
@@ -36,11 +36,11 @@ class AttributeResource extends Resource
                     ->columnSpan(2),
                 Forms\Components\Select::make('type')
                     ->searchable()
-                    ->options(FieldTypeEnum::options())
+                    ->options(AttributeTypeEnum::options())
                     ->required(),
-                Forms\Components\Select::make('input_format')
+                Forms\Components\Select::make('format')
                     ->searchable()
-                    ->options(InputFormatEnum::options())
+                    ->options(AttributeFormatEnum::options())
                     ->required(),
                 Forms\Components\Toggle::make('is_distributable')
                     ->label(__('Value per Channel'))
@@ -67,7 +67,7 @@ class AttributeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('input_format')
+                Tables\Columns\TextColumn::make('format')
                     ->searchable(),
             ])
             ->filters([

@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum FieldTypeEnum: string
+enum AttributeTypeEnum: string
 {
     case SHORT_TEXT = 'short_text';
     case LONG_TEXT = 'long_text';
@@ -23,46 +23,46 @@ enum FieldTypeEnum: string
     }
 
     /**
-     * @return array<InputFormatEnum>
+     * @return array<AttributeFormatEnum>
      */
-    public function inputFormat(): array
+    public function allowedFormats(): array
     {
         return match ($this) {
             self::SHORT_TEXT => [
-                InputFormatEnum::TEXT,
-                InputFormatEnum::INTEGER,
-                InputFormatEnum::DECIMAL,
-                InputFormatEnum::CURRENCY,
-                InputFormatEnum::COLOR,
+                AttributeFormatEnum::TEXT,
+                AttributeFormatEnum::INTEGER,
+                AttributeFormatEnum::DECIMAL,
+                AttributeFormatEnum::CURRENCY,
+                AttributeFormatEnum::COLOR,
             ],
             self::LONG_TEXT => [
-                InputFormatEnum::TEXT,
+                AttributeFormatEnum::TEXT,
             ],
             self::SINGLE_SELECT => [
-                InputFormatEnum::TEXT,
-                InputFormatEnum::BOOLEAN,
-                InputFormatEnum::INTEGER,
+                AttributeFormatEnum::TEXT,
+                AttributeFormatEnum::BOOLEAN,
+                AttributeFormatEnum::INTEGER,
             ],
             self::MULTI_SELECT => [
-                InputFormatEnum::TEXT,
-                InputFormatEnum::INTEGER,
+                AttributeFormatEnum::TEXT,
+                AttributeFormatEnum::INTEGER,
             ],
             self::CHECKBOX => [
-                InputFormatEnum::BOOLEAN,
+                AttributeFormatEnum::BOOLEAN,
             ],
             self::RADIO => [
-                InputFormatEnum::BOOLEAN,
-                InputFormatEnum::TEXT,
+                AttributeFormatEnum::BOOLEAN,
+                AttributeFormatEnum::TEXT,
             ],
             self::TOGGLE => [
-                InputFormatEnum::BOOLEAN,
-                InputFormatEnum::PERCENTAGE,
+                AttributeFormatEnum::BOOLEAN,
+                AttributeFormatEnum::PERCENTAGE,
             ],
             self::DATE => [
-                InputFormatEnum::DATE,
+                AttributeFormatEnum::DATE,
             ],
             self::DATE_TIME => [
-                InputFormatEnum::DATETIME,
+                AttributeFormatEnum::DATETIME,
             ]
         };
     }

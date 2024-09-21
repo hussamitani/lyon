@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mappings\FormFieldSetup;
+namespace App\Mappings\FieldFormatMapping;
 
 use App\Models\Attribute;
 use Filament\Forms\Components\Field;
@@ -9,7 +9,7 @@ class DefaultFieldSetup
 {
     public static function map(Field $field, Attribute $attribute): Field
     {
-        return $attribute->input_format->setup(
+        return $attribute->format->setup(
             $field->live()->reactive()
         );
     }

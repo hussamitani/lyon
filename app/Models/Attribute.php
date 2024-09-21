@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Casts\AttributeSettingsCast;
-use App\Enums\FieldTypeEnum;
-use App\Enums\InputFormatEnum;
-use App\Mappings\FormFieldMappings;
+use App\Enums\AttributeFormatEnum;
+use App\Enums\AttributeTypeEnum;
+use App\Mappings\FieldTypeMapping;
 use App\ValueObjects\AttributeSettings;
 use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property FieldTypeEnum $type
- * @property InputFormatEnum $input_format
+ * @property AttributeTypeEnum $type
+ * @property AttributeFormatEnum $format
  * @property string $name
  * @property string|null $description
  * @property int $family_id
@@ -61,15 +61,12 @@ class Attribute extends Model
         return [
             'is_distributable' => 'bool',
             'is_territorial' => 'bool',
-            'type' => FieldTypeEnum::class,
-            'input_format' => InputFormatEnum::class,
+            'type' => AttributeTypeEnum::class,
+            'format' => AttributeFormatEnum::class,
             'settings' => AttributeSettingsCast::class,
         ];
     }
 
-    /**
-     * @return CastAttribute
-     */
     public function settings(): CastAttribute
     {
         return CastAttribute::make(
@@ -91,7 +88,8 @@ class Attribute extends Model
             'family_id',
             'id',
             'id',
-        );
+        )->withPivot('order')
+            ->orderByPivot('order');
     }
 
     /**
@@ -105,15 +103,15 @@ class Attribute extends Model
     public function toFilamentField(): ?Field
     {
         return match ($this->type) {
-            FieldTypeEnum::SHORT_TEXT => FormFieldMappings\TextInputMapping::mapAsComponent($this),
-            FieldTypeEnum::LONG_TEXT => FormFieldMappings\TextAreaMapping::mapAsComponent($this),
-            FieldTypeEnum::SINGLE_SELECT => FormFieldMappings\SingleSelectMapping::mapAsComponent($this),
-            FieldTypeEnum::MULTI_SELECT => FormFieldMappings\MultiSelectMapping::mapAsComponent($this),
-            FieldTypeEnum::CHECKBOX => FormFieldMappings\CheckboxListMapping::mapAsComponent($this),
-            FieldTypeEnum::RADIO => FormFieldMappings\RadioMapping::mapAsComponent($this),
-            FieldTypeEnum::TOGGLE => FormFieldMappings\ToggleMapping::mapAsComponent($this),
-            FieldTypeEnum::DATE => FormFieldMappings\DatePickerMapping::mapAsComponent($this),
-            FieldTypeEnum::DATE_TIME => FormFieldMappings\DateTimePickerMapping::mapAsComponent($this),
+            AttributeTypeEnum::SHORT_TEXT => FieldTypeMapping\TextInputMapping::mapAsComponent($this),
+            AttributeTypeEnum::LONG_TEXT => FieldTypeMapping\TextAreaMapping::mapAsComponent($this),
+            AttributeTypeEnum::SINGLE_SELECT => FieldTypeMapping\SingleSelectMapping::mapAsComponent($this),
+            AttributeTypeEnum::MULTI_SELECT => FieldTypeMapping\MultiSelectMapping::mapAsComponent($this),
+            AttributeTypeEnum::CHECKBOX => FieldTypeMapping\CheckboxListMapping::mapAsComponent($this),
+            AttributeTypeEnum::RADIO => FieldTypeMapping\RadioMapping::mapAsComponent($this),
+            AttributeTypeEnum::TOGGLE => FieldTypeMapping\ToggleMapping::mapAsComponent($this),
+            AttributeTypeEnum::DATE => FieldTypeMapping\DatePickerMapping::mapAsComponent($this),
+            AttributeTypeEnum::DATE_TIME => FieldTypeMapping\DateTimePickerMapping::mapAsComponent($this),
         };
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Settings\Resources\AttributeResource\RelationManagers;
 
-use App\Mappings\FormFieldSetup\DefaultFieldSetup;
+use App\Mappings\FieldFormatMapping\DefaultFieldSetup;
 use App\Models\Attribute;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -25,7 +25,7 @@ class OptionsRelationManager extends RelationManager
                     Forms\Components\TextInput::make('value')
                         ->label($this->ownerRecord->name),
                     $this->ownerRecord
-                )
+                ),
             ]);
     }
 

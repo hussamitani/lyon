@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('attribute_id')->constrained('attributes')->cascadeOnDelete();
             $table->integer('order')->default(0);
             $table->unique(['family_id', 'attribute_id']);
-            //$table->unique(['family_id', 'sort']);
         });
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Mappings\FormFieldMappings;
+namespace App\Mappings\FieldTypeMapping;
 
-use App\Mappings\FormFieldSetup\DefaultFieldSetup;
+use App\Mappings\FieldFormatMapping\DefaultFieldSetup;
 use App\Models\Attribute;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Field;

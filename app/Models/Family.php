@@ -50,8 +50,11 @@ class Family extends Model
         return $this->belongsToMany(
             Attribute::class,
             'family_attributes',
-        )
-            ->orderBy('order')
-            ->using(FamilyAttributePivot::class);
+            'family_id',
+            'attribute_id',
+            'id',
+            'id',
+        )->withPivot('order')
+            ->orderByPivot('order');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mappings\FormFieldSetup;
+namespace App\Mappings\FieldFormatMapping;
 
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\TextInput;

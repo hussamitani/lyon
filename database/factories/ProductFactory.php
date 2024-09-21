@@ -37,8 +37,6 @@ class ProductFactory extends Factory
                 $product->setRelation('family', $family);
                 $family->setRelation('product', $product);
             }
-        })->afterCreating(function (Product $product) {
-
-        });
+        })->afterCreating(function (Product $product) {});
     }
 }

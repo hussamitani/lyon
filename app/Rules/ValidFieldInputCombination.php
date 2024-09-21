@@ -2,19 +2,19 @@
 
 namespace App\Rules;
 
-use App\Enums\FieldTypeEnum;
-use App\Enums\InputFormatEnum;
+use App\Enums\AttributeFormatEnum;
+use App\Enums\AttributeTypeEnum;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
 class ValidFieldInputCombination implements ValidationRule
 {
-    protected FieldTypeEnum $fieldType;
+    protected AttributeTypeEnum $fieldType;
 
-    protected InputFormatEnum $inputFormat;
+    protected AttributeFormatEnum $inputFormat;
 
-    public function __construct(FieldTypeEnum $fieldType, InputFormatEnum $inputFormat)
+    public function __construct(AttributeTypeEnum $fieldType, AttributeFormatEnum $inputFormat)
     {
         $this->fieldType = $fieldType;
         $this->inputFormat = $inputFormat;
@@ -22,7 +22,7 @@ class ValidFieldInputCombination implements ValidationRule
 
     public function passes(): bool
     {
-        return in_array($this->inputFormat, $this->fieldType->inputFormat(), true);
+        return in_array($this->inputFormat, $this->fieldType->allowedFormats(), true);
     }
 
     /**

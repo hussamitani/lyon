@@ -9,8 +9,7 @@ readonly class AttributeSettings
     public function __construct(
         public bool $is_distributable,
         public bool $is_territorial,
-    ) {
-    }
+    ) {}
 
     /**
      * @param  array<string, mixed>  $data

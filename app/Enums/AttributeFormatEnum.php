@@ -2,21 +2,18 @@
 
 namespace App\Enums;
 
-use App\Mappings\FormFieldSetup\CurrencyFieldSetup;
-use App\Mappings\FormFieldSetup\IntegerFieldSetup;
+use App\Mappings\FieldFormatMapping\CurrencyFieldSetup;
+use App\Mappings\FieldFormatMapping\IntegerFieldSetup;
 use Filament\Forms\Components\Field;
 
-enum InputFormatEnum: string
+enum AttributeFormatEnum: string
 {
     case TEXT = 'text';
     case INTEGER = 'integer';
     case DECIMAL = 'decimal';
     case BOOLEAN = 'boolean';
     case CURRENCY = 'currency';
-    case WEIGHT = 'weight';
-    case LENGTH = 'length';
-    case AREA = 'area';
-    case VOLUME = 'volume';
+    case MEASUREMENT = 'measurement';
     case DATE = 'date';
     case TIME = 'time';
     case DATETIME = 'datetime';
